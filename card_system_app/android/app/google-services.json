@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "573681365782",
+    "project_id": "card-system-app",
+    "storage_bucket": "card-system-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573681365782:android:7e30382d4456ec071e5637",
+        "android_client_info": {
+          "package_name": "com.cardsystem.card_system_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573681365782-geku899mchl2h54k40b9ut8resr8ur03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSakNhnelL9j129gbq7okwer2U8b-mBkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573681365782-geku899mchl2h54k40b9ut8resr8ur03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
