@@ -1,4 +1,5 @@
 import 'package:card_system_app/screens/login_screen.dart';
+import 'package:card_system_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class CardSysApp extends StatelessWidget {
@@ -9,7 +10,7 @@ class CardSysApp extends StatelessWidget {
     return const MaterialApp(
         title: 'Instagram Clone',
         debugShowCheckedModeBanner: false,
-        home:LoginScreen()
+        home:SignupScreen()
     );
   }
 }

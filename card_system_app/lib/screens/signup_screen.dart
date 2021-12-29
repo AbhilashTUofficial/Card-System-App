@@ -1,22 +1,26 @@
 import 'package:card_system_app/Palette/constants.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignupScreenState createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
 
   @override
   void dispose() {
     super.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
+    _emailController.dispose();
+
   }
 
   @override
@@ -43,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(
               horizontal: 32.0,
-              vertical: 100.0,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Enter username
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children:  [
                     const Text("Username", style: labelStyle),
                     InputField(
                       hintText: 'Enter Your Username',
@@ -65,10 +68,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 20.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:  [
+                    const Text("Email", style: labelStyle),
+                    InputField(
+                      hintText: 'Enter Your Email',
+                      isPassword: false,
+                      textInputType: TextInputType.text,
+                      textEditingController: _emailController,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
                 // Enter Password
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children:  [
                     const Text("Password", style: labelStyle),
                     InputField(
                       hintText: 'Enter Your Password',
@@ -76,25 +92,29 @@ class _LoginScreenState extends State<LoginScreen> {
                       textEditingController: _passwordController,
                       isPassword: true,
                     ),
+                    const SizedBox(height: 20.0),
+                    InputField(
+                      hintText: 'Confirm Your Password',
+                      textInputType: TextInputType.text,
+                      textEditingController: _passwordController,
+                      isPassword: true,
+                    ),
                   ],
                 ),
-                const LogInButton(),
+                const SignupButton(),
                 const SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      child: const Text(
-                        "Not Registered yet? ",
-                        style: labelStyle,
-                      ),
+                      child: const Text("Already a user? ",style: labelStyle,),
                       padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
                     GestureDetector(
                       onTap: () {},
                       child: Container(
                         child: const Text(
-                          "SIGN UP",
+                          "LOG IN",
                           style: labelStyle,
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -102,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     )
                   ],
                 )
+
               ],
             ),
           ),
@@ -117,12 +138,13 @@ class InputField extends StatelessWidget {
   final TextEditingController textEditingController;
   final bool isPassword;
 
+
   const InputField(
       {Key? key,
-      required this.textInputType,
-      required this.hintText,
-      required this.textEditingController,
-      this.isPassword = false})
+        required this.textInputType,
+        required this.hintText,
+        required this.textEditingController,
+        this.isPassword = false})
       : super(key: key);
 
   @override
@@ -132,7 +154,7 @@ class InputField extends StatelessWidget {
       decoration: boxDecorationStyle,
       height: 60.0,
       margin: const EdgeInsets.symmetric(vertical: 6),
-      child: TextField(
+      child:  TextField(
         keyboardType: TextInputType.emailAddress,
         controller: textEditingController,
         style: const TextStyle(
@@ -142,18 +164,17 @@ class InputField extends StatelessWidget {
         decoration: InputDecoration(
           border: InputBorder.none,
           contentPadding: const EdgeInsets.only(top: 14.0),
-          prefixIcon: isPassword
-              ? const Icon(
-                  Icons.lock,
-                  color: Colors.white,
-                )
-              : const Icon(
-                  Icons.email,
-                  color: Colors.white,
-                ),
+          prefixIcon: isPassword?const Icon(
+            Icons.lock,
+            color: Colors.white,
+          ):const Icon(
+            Icons.email,
+            color: Colors.white,
+          ),
           hintText: hintText,
           hintStyle: hintTextStyle,
         ),
+
       ),
     );
   }
@@ -171,8 +192,8 @@ class LogoSpace extends StatelessWidget {
   }
 }
 
-class LogInButton extends StatelessWidget {
-  const LogInButton({Key? key}) : super(key: key);
+class SignupButton extends StatelessWidget {
+  const SignupButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -181,14 +202,14 @@ class LogInButton extends StatelessWidget {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
+        onPressed: () => print('Signup Button Pressed'),
         padding: const EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         color: Colors.white,
         child: const Text(
-          'LOG IN',
+          'SIGN UP',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,

@@ -9,6 +9,7 @@ const labelStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
   fontFamily: 'OpenSans',
+  fontSize: 16
 );
 
 final boxDecorationStyle = BoxDecoration(
