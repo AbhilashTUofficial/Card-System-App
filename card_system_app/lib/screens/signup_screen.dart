@@ -1,4 +1,6 @@
+
 import 'package:card_system_app/Palette/constants.dart';
+import 'package:card_system_app/resources/auth_methods.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -11,6 +13,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
 
@@ -20,6 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _usernameController.dispose();
     _passwordController.dispose();
     _emailController.dispose();
+    _confirmPasswordController.dispose();
 
   }
 
@@ -96,13 +100,44 @@ class _SignupScreenState extends State<SignupScreen> {
                     InputField(
                       hintText: 'Confirm Your Password',
                       textInputType: TextInputType.text,
-                      textEditingController: _passwordController,
+                      textEditingController: _confirmPasswordController,
                       isPassword: true,
                     ),
                   ],
                 ),
-                const SignupButton(),
-                const SizedBox(height: 20.0),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 25.0),
+                  width: double.infinity,
+                  child: RaisedButton(
+                    elevation: 5.0,
+                    onPressed: ()async {
+                      if(_passwordController.text==_confirmPasswordController.text){
+                        String res = await AuthMethods().signUpUser(
+                          email: _emailController.text,
+                          username: _usernameController.text,
+                          password: _passwordController.text,);
+                        print(res);
+                      }else{
+                      print("nop");
+                      }
+                    },
+                    padding: const EdgeInsets.all(15.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    color: Colors.white,
+                    child: const Text(
+                      'SIGN UP',
+                      style: TextStyle(
+                        color: Color(0xFF527DAA),
+                        letterSpacing: 1.5,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
+                  ),
+                ),                const SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -192,33 +227,3 @@ class LogoSpace extends StatelessWidget {
   }
 }
 
-class SignupButton extends StatelessWidget {
-  const SignupButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () => print('Signup Button Pressed'),
-        padding: const EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        color: Colors.white,
-        child: const Text(
-          'SIGN UP',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
-      ),
-    );
-  }
-}
