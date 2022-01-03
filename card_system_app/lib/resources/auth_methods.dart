@@ -28,6 +28,8 @@ class AuthMethods{
           'email':email,
           'uid':cred.user!.uid,
         });
+        res='success';
+
 
         // await _firestore.collection('users').add({
         //   'username':username,
@@ -38,8 +40,8 @@ class AuthMethods{
         //   'uid':cred.user!.uid,
         // });
       }
-    }catch(err){
-      res=err.toString();
+    }on FirebaseAuthException catch(err){
+      res=err.code.toString();
     }
   return res;
   }

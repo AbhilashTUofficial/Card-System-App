@@ -1,5 +1,5 @@
-
 import 'package:card_system_app/Palette/constants.dart';
+import 'package:card_system_app/Widgets/showSnackBar.dart';
 import 'package:card_system_app/resources/auth_methods.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +13,10 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -24,7 +25,38 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _emailController.dispose();
     _confirmPasswordController.dispose();
+  }
 
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    if (_passwordController.text == _confirmPasswordController.text) {
+      String res = await AuthMethods().signUpUser(
+        email: _emailController.text,
+        username: _usernameController.text,
+        password: _passwordController.text,
+      );
+      setState(() {
+        _isLoading = false;
+      });
+      if (res == 'success') {
+        showSnackBar("Success Signed Up", context);
+      }else if(res=='invalid-email'){
+        showSnackBar("Check Your Email!", context);
+
+      }else if(res=='weak-password'){
+        showSnackBar("Your Password is too weak!", context);
+      }
+      else if(res=='email-already-in-use'){
+        showSnackBar("This Email is already in use", context);
+      }
+      else {
+        print(res);
+      }
+    } else {
+      showSnackBar("Confirm your password", context);
+    }
   }
 
   @override
@@ -61,7 +93,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 // Enter username
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
+                  children: [
                     const Text("Username", style: labelStyle),
                     InputField(
                       hintText: 'Enter Your Username',
@@ -74,7 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 const SizedBox(height: 20.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
+                  children: [
                     const Text("Email", style: labelStyle),
                     InputField(
                       hintText: 'Enter Your Email',
@@ -88,7 +120,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 // Enter Password
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
+                  children: [
                     const Text("Password", style: labelStyle),
                     InputField(
                       hintText: 'Enter Your Password',
@@ -109,24 +141,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 25.0),
                   width: double.infinity,
                   child: RaisedButton(
+
                     elevation: 5.0,
-                    onPressed: ()async {
-                      if(_passwordController.text==_confirmPasswordController.text){
-                        String res = await AuthMethods().signUpUser(
-                          email: _emailController.text,
-                          username: _usernameController.text,
-                          password: _passwordController.text,);
-                        print(res);
-                      }else{
-                      print("nop");
-                      }
-                    },
+                    onPressed: () => signUpUser(),
                     padding: const EdgeInsets.all(15.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     color: Colors.white,
-                    child: const Text(
+                    child: _isLoading?const Center(child:SizedBox(child: CircularProgressIndicator(),width: 21,height: 21,)):const Text(
                       'SIGN UP',
                       style: TextStyle(
                         color: Color(0xFF527DAA),
@@ -137,12 +160,16 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                   ),
-                ),                const SizedBox(height: 20.0),
+                ),
+                const SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      child: const Text("Already a user? ",style: labelStyle,),
+                      child: const Text(
+                        "Already a user? ",
+                        style: labelStyle,
+                      ),
                       padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
                     GestureDetector(
@@ -157,7 +184,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     )
                   ],
                 )
-
               ],
             ),
           ),
@@ -173,13 +199,12 @@ class InputField extends StatelessWidget {
   final TextEditingController textEditingController;
   final bool isPassword;
 
-
   const InputField(
       {Key? key,
-        required this.textInputType,
-        required this.hintText,
-        required this.textEditingController,
-        this.isPassword = false})
+      required this.textInputType,
+      required this.hintText,
+      required this.textEditingController,
+      this.isPassword = false})
       : super(key: key);
 
   @override
@@ -189,7 +214,7 @@ class InputField extends StatelessWidget {
       decoration: boxDecorationStyle,
       height: 60.0,
       margin: const EdgeInsets.symmetric(vertical: 6),
-      child:  TextField(
+      child: TextField(
         keyboardType: TextInputType.emailAddress,
         controller: textEditingController,
         style: const TextStyle(
@@ -199,17 +224,18 @@ class InputField extends StatelessWidget {
         decoration: InputDecoration(
           border: InputBorder.none,
           contentPadding: const EdgeInsets.only(top: 14.0),
-          prefixIcon: isPassword?const Icon(
-            Icons.lock,
-            color: Colors.white,
-          ):const Icon(
-            Icons.email,
-            color: Colors.white,
-          ),
+          prefixIcon: isPassword
+              ? const Icon(
+                  Icons.lock,
+                  color: Colors.white,
+                )
+              : const Icon(
+                  Icons.email,
+                  color: Colors.white,
+                ),
           hintText: hintText,
           hintStyle: hintTextStyle,
         ),
-
       ),
     );
   }
@@ -226,4 +252,3 @@ class LogoSpace extends StatelessWidget {
     );
   }
 }
-
