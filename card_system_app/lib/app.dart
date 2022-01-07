@@ -10,7 +10,8 @@ class CardSysApp extends StatelessWidget {
     return const MaterialApp(
         title: 'Instagram Clone',
         debugShowCheckedModeBanner: false,
-        home:SignupScreen()
+        // home:SignupScreen()
+      home: LoginScreen(),
     );
   }
 }

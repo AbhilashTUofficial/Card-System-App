@@ -1,7 +1,9 @@
 import 'package:card_system_app/Palette/constants.dart';
+import 'package:card_system_app/Widgets/logoSpace.dart';
 import 'package:card_system_app/Widgets/showSnackBar.dart';
 import 'package:card_system_app/resources/auth_methods.dart';
 import 'package:flutter/material.dart';
+
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -241,14 +243,3 @@ class InputField extends StatelessWidget {
   }
 }
 
-class LogoSpace extends StatelessWidget {
-  const LogoSpace({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const CircleAvatar(
-      radius: 60,
-      backgroundImage: AssetImage("assets/img/logo.png"),
-    );
-  }
-}

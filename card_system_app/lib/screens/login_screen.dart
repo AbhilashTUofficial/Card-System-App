@@ -1,4 +1,7 @@
 import 'package:card_system_app/Palette/constants.dart';
+import 'package:card_system_app/Widgets/logoSpace.dart';
+import 'package:card_system_app/Widgets/showSnackBar.dart';
+import 'package:card_system_app/resources/auth_methods.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,14 +12,37 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading=false;
 
   @override
   void dispose() {
     super.dispose();
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
+  }
+  logInUser()async{
+    setState(() {
+      _isLoading=true;
+    });
+    String res = await AuthMethods().logInUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+    setState(() {
+      _isLoading=false;
+    });
+    if (res == 'success') {
+      showSnackBar("Success Logged In", context);
+    } else if (res == 'wrong-password') {
+      showSnackBar("Your Password is wrong!", context);
+    } else if (res == 'too-many-requests') {
+      showSnackBar("Slow down buddy", context);
+    } else {
+      showSnackBar(res, context);
+      print(res);
+    }
   }
 
   @override
@@ -55,12 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Username", style: labelStyle),
+                    const Text("Email", style: labelStyle),
                     InputField(
-                      hintText: 'Enter Your Username',
+                      hintText: 'Enter Your Email',
                       isPassword: false,
                       textInputType: TextInputType.text,
-                      textEditingController: _usernameController,
+                      textEditingController: _emailController,
                     ),
                   ],
                 ),
@@ -78,7 +104,30 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                const LogInButton(),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 25.0),
+                  width: double.infinity,
+                  child: RaisedButton(
+
+                    elevation: 5.0,
+                    onPressed: () => logInUser(),
+                    padding: const EdgeInsets.all(15.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    color: Colors.white,
+                    child: _isLoading?const Center(child:SizedBox(child: CircularProgressIndicator(),width: 21,height: 21,)):const Text(
+                      'LOG IN',
+                      style: TextStyle(
+                        color: Color(0xFF527DAA),
+                        letterSpacing: 1.5,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -159,45 +208,3 @@ class InputField extends StatelessWidget {
   }
 }
 
-class LogoSpace extends StatelessWidget {
-  const LogoSpace({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const CircleAvatar(
-      radius: 60,
-      backgroundImage: AssetImage("assets/img/logo.png"),
-    );
-  }
-}
-
-class LogInButton extends StatelessWidget {
-  const LogInButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
-        padding: const EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        color: Colors.white,
-        child: const Text(
-          'LOG IN',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
-      ),
-    );
-  }
-}
