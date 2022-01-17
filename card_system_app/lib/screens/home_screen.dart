@@ -1,5 +1,6 @@
 import 'package:card_system_app/Palette/PageBackground.dart';
 import 'package:card_system_app/Palette/constants.dart';
+import 'package:card_system_app/resources/auth_methods.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,12 +10,26 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: const [
-        BackgroundGradient(),
+      children:  [
+        const BackgroundGradient(),
         Center(
-          child: Text(
-            'Home page',
-            style: labelStyle,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Home page',
+                style: labelStyle,
+              ),
+              GestureDetector(
+                onTap: ()async{
+                  await AuthMethods().signOut();
+                },
+                child: const Text(
+                  'Sign Out',
+                  style: labelStyle,
+                ),
+              ),
+            ],
           ),
         )
       ],
