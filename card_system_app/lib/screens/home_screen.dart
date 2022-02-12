@@ -1,13 +1,12 @@
-import 'package:card_system_app/Palette/PageBackground.dart';
-import 'package:card_system_app/Palette/constants.dart';
-import 'package:card_system_app/resources/auth_methods.dart';
-import 'package:card_system_app/screens/login_screen.dart';
+
+import 'package:card_system_app/resources/models/user.dart';
 import 'package:card_system_app/screens/submission.dart';
 import 'package:card_system_app/screens/updates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../Widgets/sideNavBar.dart';
 import 'info_screen.dart';
 
 class Home extends StatefulWidget {
@@ -24,34 +23,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _tabController = TabController(length: 3, vsync: this, initialIndex: 2);
   }
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  Future<void> getUserDetails() async {
-    User currentUser = _auth.currentUser!;
-
-    DocumentSnapshot snap =
-        await _firestore.collection("users").doc(currentUser.uid).get();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          // Remove padding
-          padding: EdgeInsets.zero,
-          children: const [
-            UserAccountsDrawerHeader(
-              accountEmail: null,
-              accountName: null,
-            ),
-          ],
-        ),
-      ),
+      drawer: SideNavBar(),
       appBar: AppBar(
         title: const Text("NCAS Card System"),
         elevation: 0.5,

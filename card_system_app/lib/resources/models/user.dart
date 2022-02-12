@@ -1,12 +1,21 @@
-import 'package:equatable/equatable.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class User extends Equatable {
-  const User(this.id);
+final databaseUserProvider =Provider<UserDetails>((ref)=>UserDetails());
 
-  final String id;
+class UserDetails{
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  @override
-  List<Object> get props => [id];
+  Future<String> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
 
-  static const empty = User('-');
+    DocumentSnapshot snap =
+    await _firestore.collection("users").doc(currentUser.uid).get();
+    final userEmail = StateProvider((ref) => currentUser.email).toString();
+    return currentUser.email.toString();
+  }
 }
+
+

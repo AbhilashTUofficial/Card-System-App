@@ -1,8 +1,8 @@
-import 'package:card_system_app/resources/models/writeToFile.dart';
 import 'package:card_system_app/screens/home_screen.dart';
 import 'package:card_system_app/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 class CardSysApp extends StatelessWidget {
@@ -21,8 +21,7 @@ class CardSysApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
-              userCredWriteToFile();
-              return  Home();
+              return  const ProviderScope(child: Home());
             } else if (snapshot.hasError) {
               return Center(
                 child: Text('${snapshot.error}'),

@@ -6,6 +6,7 @@ import 'package:card_system_app/resources/auth_methods.dart';
 import 'package:card_system_app/screens/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'home_screen.dart';
 
@@ -49,7 +50,7 @@ class _SignupScreenState extends State<SignupScreen> {
       });
       if (res == 'success') {
         showSnackBar("Success Signed Up", context);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Home()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const ProviderScope(child: Home())));
 
       }else if(res=='invalid-email'){
         showSnackBar("Check Your Email!", context);

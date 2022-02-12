@@ -5,8 +5,8 @@ import 'package:card_system_app/Widgets/showSnackBar.dart';
 import 'package:card_system_app/resources/auth_methods.dart';
 import 'package:card_system_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 import 'home_screen.dart';
 
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res == 'success') {
 
       showSnackBar("Success Logged In", context);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Home()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const ProviderScope(child: Home())));
     } else if (res == 'wrong-password') {
       showSnackBar("Your Password is wrong!", context);
     } else if (res == 'too-many-requests') {
