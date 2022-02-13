@@ -12,7 +12,7 @@ class _UpdatesState extends State<Updates> {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
       child: ListView.builder(
         itemBuilder: (BuildContext context, int index) => Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -33,19 +33,36 @@ class _UpdatesState extends State<Updates> {
 }
 
 Widget _updateTile(items) {
-  return const Card(
+  return Card(
     child: ExpansionTile(
       tilePadding: EdgeInsets.all(10),
       leading: SizedBox(
-        child: CircleAvatar(
-          // backgroundImage:
-          // AssetImage(contactList[index].imgUrl),
-          radius: 32,
+        width: 60,
+        child: Stack(
+          children: [
+            const CircleAvatar(
+              backgroundImage: AssetImage("assets/img/profile_img.png"),
+              radius: 32,
+            ),
+            Positioned(
+              bottom: 0,left: 2,
+              child: Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(
+                    2,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      title: Text("Name"),
-      subtitle: Text("Department"),
-      children: <Widget>[
+      title: const Text("Name"),
+      subtitle: const Text("Department"),
+      children: const <Widget>[
         ListTile(
           title: Text("Context"),
         )

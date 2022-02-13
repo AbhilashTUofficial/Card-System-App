@@ -19,6 +19,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  // Controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading=false;
@@ -29,6 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
   }
+
+  // logInUser Method form AuthMethods class
   logInUser()async{
     setState(() {
       _isLoading=true;
@@ -40,8 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading=false;
     });
-    if (res == 'success') {
 
+    // SnackBar response
+    if (res == 'success') {
       showSnackBar("Success Logged In", context);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const ProviderScope(child: Home())));
     } else if (res == 'wrong-password') {
@@ -112,54 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 25.0),
-                  width: double.infinity,
-                  child: RaisedButton(
-
-                    elevation: 5.0,
-                    onPressed: () => logInUser(),
-                    padding: const EdgeInsets.all(15.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    color: Colors.white,
-                    child: _isLoading?const Center(child:SizedBox(child: CircularProgressIndicator(),width: 21,height: 21,)):const Text(
-                      'LOG IN',
-                      style: TextStyle(
-                        color: Color(0xFF527DAA),
-                        letterSpacing: 1.5,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                  ),
-                ),
+                logInBtn(),
                 const SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: const Text(
-                        "Not Registered yet? ",
-                        style: labelStyle,
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
-                    GestureDetector(
-                      onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SignupScreen())),
-
-                      child: Container(
-                        child: const Text(
-                          "SIGN UP",
-                          style: labelStyle,
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                      ),
-                    )
-                  ],
-                )
+                notRegBtn(),
               ],
             ),
           ),
@@ -167,6 +127,61 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  logInBtn() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+
+        elevation: 5.0,
+        onPressed: () => logInUser(),
+        padding: const EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        color: Colors.white,
+        child: _isLoading?const Center(child:SizedBox(child: CircularProgressIndicator(),width: 21,height: 21,)):const Text(
+          'LOG IN',
+          style: TextStyle(
+            color: Color(0xFF527DAA),
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    );
+  }
+
+  notRegBtn() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: const Text(
+            "Not Registered yet? ",
+            style: labelStyle,
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 8),
+        ),
+        GestureDetector(
+          onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SignupScreen())),
+
+          child: Container(
+            child: const Text(
+              "SIGN UP",
+              style: labelStyle,
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+          ),
+        )
+      ],
+    );
+  }
+
+
 }
 
 

@@ -1,9 +1,14 @@
 import 'package:card_system_app/resources/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:card_system_app/resources/auth_methods.dart';
 
 class SideNavBar extends StatelessWidget {
   const SideNavBar({Key? key}) : super(key: key);
+
+  signOut() async {
+    await AuthMethods().signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +20,9 @@ class SideNavBar extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(top: 36, left: 18),
-            height: 200,
-            decoration: BoxDecoration(color: Colors.blue),
+            padding: const EdgeInsets.only(top: 36, left: 18),
+            height: 228,
+            decoration: const BoxDecoration(color: Colors.blue),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -29,9 +34,10 @@ class SideNavBar extends StatelessWidget {
                 Consumer(
                   builder:
                       (BuildContext context, WidgetRef ref, Widget? child) {
-                    return ref.watch(userProvider).when(data: (String value) {
+                    return ref.watch(usernameProvider).when(
+                        data: (String value) {
                       return Text(
-                        value.toUpperCase().substring(0, value.indexOf("@")),
+                        value.toUpperCase(),
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -44,6 +50,25 @@ class SideNavBar extends StatelessWidget {
                       return const CircularProgressIndicator(
                         color: Colors.white,
                       );
+                    });
+                  },
+                ),
+                Consumer(
+                  builder:
+                      (BuildContext context, WidgetRef ref, Widget? child) {
+                    return ref.watch(userEmailProvider).when(
+                        data: (String value) {
+                      return Text(
+                        value.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      );
+                    }, error: (Object e, _) {
+                      return Container();
+                    }, loading: () {
+                      return const SizedBox();
                     });
                   },
                 ),
@@ -62,7 +87,7 @@ class SideNavBar extends StatelessWidget {
               child: const Text('LOG OUT',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-            onTap: (){},
+            onTap: () => signOut(),
           ),
         ],
       ),

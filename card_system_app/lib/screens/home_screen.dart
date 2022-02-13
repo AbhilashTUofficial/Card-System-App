@@ -1,37 +1,30 @@
-
-import 'package:card_system_app/resources/models/user.dart';
 import 'package:card_system_app/screens/submission.dart';
 import 'package:card_system_app/screens/updates.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../Widgets/sideNavBar.dart';
 import 'info_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-
   @override
   State<Home> createState() => _HomeState();
 }
 
+// Controllers
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 2);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: SideNavBar(),
+      drawer: const SideNavBar(),
       appBar: AppBar(
         title: const Text("NCAS Card System"),
         elevation: 0.5,
@@ -57,11 +50,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       body: TabBarView(
       controller: _tabController,
-      children: [
+      children: const [
         Updates(),
         Submission(),
         Info(),
-
       ],
     ),
     );

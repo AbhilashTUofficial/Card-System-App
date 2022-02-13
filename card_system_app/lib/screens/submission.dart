@@ -7,12 +7,13 @@ import '../Widgets/SubInputField.dart';
 
 class Submission extends StatefulWidget {
   const Submission({Key? key}) : super(key: key);
-
   @override
   _SubmissionState createState() => _SubmissionState();
 }
 
 class _SubmissionState extends State<Submission> {
+
+  // Controllers
   final TextEditingController _regNumController = TextEditingController();
 
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../Widgets/infoCard.dart';
 
 class Info extends StatelessWidget {
@@ -8,7 +7,7 @@ class Info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.only(bottom: 80),
+      padding: const EdgeInsets.only(bottom: 80),
       child: Container(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(bottom: 40),
