@@ -1,4 +1,4 @@
-import 'package:card_system_app/screens/submission.dart';
+import 'package:card_system_app/screens/submission_screen.dart';
 import 'package:card_system_app/screens/updates.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/sideNavBar.dart';
@@ -17,7 +17,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
   }
 
 
@@ -52,7 +52,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       controller: _tabController,
       children: const [
         Updates(),
-        Submission(),
+        SingleChildScrollView(child: Submission()),
         Info(),
       ],
     ),

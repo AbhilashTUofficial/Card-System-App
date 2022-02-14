@@ -35,7 +35,7 @@ class _UpdatesState extends State<Updates> {
 Widget _updateTile(items) {
   return Card(
     child: ExpansionTile(
-      tilePadding: EdgeInsets.all(10),
+      tilePadding: const EdgeInsets.all(10),
       leading: SizedBox(
         width: 60,
         child: Stack(
