@@ -1,11 +1,14 @@
 import 'package:card_system_app/screens/submission_screen.dart';
 import 'package:card_system_app/screens/updates.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/sideNavBar.dart';
 import 'info_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -13,13 +16,13 @@ class Home extends StatefulWidget {
 // Controllers
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +38,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               size: 24,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () async {
+              // final FirebaseAuth _auth = FirebaseAuth.instance;
+              // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+              //
+              // final QuerySnapshot result =
+              //     await _firestore.collection('Cases').get();
+              // final List<DocumentSnapshot> documents = result.docs;
+              //
+              // documents.forEach((data) => print(data['CaseId']));
+            },
           ),
         ],
+
+        // Tabs
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.white,
@@ -49,14 +63,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ),
       ),
       body: TabBarView(
-      controller: _tabController,
-      children: const [
-        Updates(),
-        SingleChildScrollView(child: Submission()),
-        Info(),
-      ],
-    ),
+        controller: _tabController,
+        children: const [
+          Updates(),
+          SingleChildScrollView(child: Submission()),
+          Info(),
+        ],
+      ),
     );
   }
 }
-
