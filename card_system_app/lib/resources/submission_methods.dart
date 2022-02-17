@@ -9,7 +9,7 @@ class SubMethods {
   Future<String> submitNewEntry({
     required String name,
     required String department,
-    required String cardId,
+    required int cardId,
     required String description,
     required String regNo,
     required String dateTime,
@@ -18,7 +18,7 @@ class SubMethods {
     try {
       if (name.isNotEmpty ||
           department.isNotEmpty ||
-          cardId.isNotEmpty ||
+          cardId.isNaN ||
           description.isEmpty ||
           regNo.isEmpty ||
           dateTime.isEmpty) {

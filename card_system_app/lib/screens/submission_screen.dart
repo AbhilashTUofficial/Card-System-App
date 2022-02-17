@@ -36,7 +36,7 @@ class _SubmissionState extends State<Submission> {
     String res = await SubMethods().submitNewEntry(
         name: stuNameController.text,
         department: dropdownValue,
-        cardId: "red",
+        cardId: _redIsChecked?0:_yellowIsChecked?1:_blueIsChecked?2:_yellowIsChecked?3:9,
         description: descriptionController.text,
         regNo: regNumController.text,
         dateTime: now.year.toString() +
@@ -92,9 +92,11 @@ class _SubmissionState extends State<Submission> {
                       },
                       items: <String>[
                         'Dept of Computer Science',
-                        'Two',
-                        'Free',
-                        'Four'
+                        'Department of English',
+                        'Department of Commerce',
+                        'Department of Psychology',
+                        'Department of Mathematics',
+                        'Department of Physics',
                       ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -235,23 +237,24 @@ class _SubmissionState extends State<Submission> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(6),
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height - 460,
+                    height: MediaQuery.of(context).size.height - 440,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
                           "Description",
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.black45),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height - 520,
+                          height: MediaQuery.of(context).size.height - 486,
                           child: TextField(
                             expands: true,
                             maxLines: null,
                             decoration: const InputDecoration(
-                                filled: true, fillColor: Colors.black12),
+                              border: InputBorder.none,
+                                filled: true, fillColor: Color(0x10050505)),
                             controller: descriptionController,
                           ),
                         ),
@@ -259,13 +262,13 @@ class _SubmissionState extends State<Submission> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
                           child: Container(
-                            margin: const EdgeInsets.all(12),
+                            margin: const EdgeInsets.only(left: 12,right: 10),
                             child: const Text(
                               "CANCEL",
                               style: TextStyle(

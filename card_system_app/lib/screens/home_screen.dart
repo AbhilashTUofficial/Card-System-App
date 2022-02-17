@@ -1,3 +1,4 @@
+import 'package:card_system_app/screens/history_screen.dart';
 import 'package:card_system_app/screens/submission_screen.dart';
 import 'package:card_system_app/screens/updates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,7 +59,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           tabs: const [
             Tab(text: "UPDATES"),
             Tab(text: "SUBMISSION"),
-            Tab(text: "INFO"),
+            Tab(text: "HISTORY"),
           ],
         ),
       ),
@@ -67,7 +68,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         children: const [
           Updates(),
           SingleChildScrollView(child: Submission()),
-          Info(),
+          History(),
         ],
       ),
     );

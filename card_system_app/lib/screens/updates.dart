@@ -46,7 +46,6 @@ class _UpdatesState extends State<Updates> {
   }
 }
 
-
 // UpdateTile widget
 
 Widget _updateTile(i) {
@@ -67,15 +66,37 @@ Widget _updateTile(i) {
                   Positioned(
                     bottom: 0,
                     left: 2,
-                    child: Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(
-                          2,
-                        ),
-                      ),
+                    child: Consumer(
+                      builder:
+                          (BuildContext context, WidgetRef ref, Widget? child) {
+                        return ref.watch(usernameProvider).when(
+                            data: (String name) {
+                          return Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              color: updates[i][3] == 0
+                                  ? Colors.redAccent
+                                  : updates[i][3] == 1
+                                      ? Colors.amber
+                                      : updates[i][3] == 2
+                                          ? Colors.blueAccent
+                                          : updates[i][3] == 3
+                                              ? Colors.green
+                                              : Colors.black,
+                              borderRadius: BorderRadius.circular(
+                                2,
+                              ),
+                            ),
+                          );
+                        }, error: (Object e, _) {
+                          return Container();
+                        }, loading: () {
+                          return const CircularProgressIndicator(
+                            color: Colors.blue,
+                          );
+                        });
+                      },
                     ),
                   ),
                 ],

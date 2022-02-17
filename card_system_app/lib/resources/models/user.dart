@@ -60,7 +60,7 @@ class GeneralData {
       DocumentSnapshot snap =
           await _firestore.collection("Cases").doc(id).get();
       updates.add(
-          [snap.get("Name"), snap.get("Department"), snap.get("Description")]);
+          [snap.get("Name"), snap.get("Department"), snap.get("Description"),snap.get("Card id")]);
     });
 
     return updates;
