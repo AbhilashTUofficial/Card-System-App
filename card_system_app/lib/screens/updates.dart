@@ -51,10 +51,13 @@ class _UpdatesState extends State<Updates> {
 Widget _updateTile(i) {
   return Consumer(
     builder: (BuildContext context, WidgetRef ref, Widget? child) {
-      return ref.watch(updateProvider).when(data: (List updates) {
+      return ref.watch(caseIdProvider).when(data: (List updates) {
         return Card(
           child: ExpansionTile(
             tilePadding: const EdgeInsets.all(10),
+
+            // Circular Avatar and Card indicator
+            //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             leading: SizedBox(
               width: 60,
               child: Stack(
@@ -69,19 +72,19 @@ Widget _updateTile(i) {
                     child: Consumer(
                       builder:
                           (BuildContext context, WidgetRef ref, Widget? child) {
-                        return ref.watch(usernameProvider).when(
-                            data: (String name) {
+                        return ref.watch(entryCardProvider(updates[i])).when(
+                            data: (int cardId) {
                           return Container(
                             width: 20,
                             height: 20,
                             decoration: BoxDecoration(
-                              color: updates[i][3] == 0
+                              color: cardId == 0
                                   ? Colors.redAccent
-                                  : updates[i][3] == 1
+                                  : cardId == 1
                                       ? Colors.amber
-                                      : updates[i][3] == 2
+                                      : cardId == 2
                                           ? Colors.blueAccent
-                                          : updates[i][3] == 3
+                                          : cardId == 3
                                               ? Colors.green
                                               : Colors.black,
                               borderRadius: BorderRadius.circular(
@@ -102,13 +105,15 @@ Widget _updateTile(i) {
                 ],
               ),
             ),
-            // Apparently i could only fetch the data through another provider
-            // not sure why, maybe it hold some special exception statements
-            // here usernameProvider is not in use
+            //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+            // Entry name
+            //-----------------------------------------------------------------
             title: Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                return ref.watch(usernameProvider).when(data: (String name) {
-                  return Text(updates[i][0]);
+                return ref.watch(entryNameProvider(updates[i])).when(
+                    data: (String name) {
+                  return Text(name);
                 }, error: (Object e, _) {
                   return Container();
                 }, loading: () {
@@ -118,10 +123,15 @@ Widget _updateTile(i) {
                 });
               },
             ),
+            //-----------------------------------------------------------------
+
+            // Entry Department
+            //*****************************************************************
             subtitle: Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                return ref.watch(usernameProvider).when(data: (String name) {
-                  return Text(updates[i][1]);
+                return ref.watch(entryDeptProvider(updates[i])).when(
+                    data: (String department) {
+                  return Text(department);
                 }, error: (Object e, _) {
                   return Container();
                 }, loading: () {
@@ -131,14 +141,18 @@ Widget _updateTile(i) {
                 });
               },
             ),
+            //*****************************************************************
+
+            // Entry Description
+            //=================================================================
             children: <Widget>[
               ListTile(
                 title: Consumer(
                   builder:
                       (BuildContext context, WidgetRef ref, Widget? child) {
-                    return ref.watch(usernameProvider).when(
-                        data: (String name) {
-                      return Text(updates[i][2]);
+                    return ref.watch(entryDescProvider(updates[i])).when(
+                        data: (String description) {
+                      return Text(description);
                     }, error: (Object e, _) {
                       return Container();
                     }, loading: () {
@@ -150,13 +164,18 @@ Widget _updateTile(i) {
                 ),
               )
             ],
+            //=================================================================
           ),
         );
       }, error: (Object e, _) {
-        return Container();
+        return const Center(
+            child: Text(
+          "No Entry yet",
+          style: TextStyle(color: Colors.grey, fontSize: 24),
+        ));
       }, loading: () {
         return const CircularProgressIndicator(
-          color: Colors.white,
+          color: Colors.blue,
         );
       });
     },

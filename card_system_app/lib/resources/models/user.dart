@@ -65,4 +65,38 @@ class GeneralData {
 
     return updates;
   }
+
+  Future<String> getEntryName(String id) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    DocumentSnapshot snap =
+    await _firestore.collection("Cases").doc(id).get();
+    return snap.get("Name");
+  }
+
+
+  Future<String> getEntryDept(String id) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    DocumentSnapshot snap =
+    await _firestore.collection("Cases").doc(id).get();
+    return snap.get("Department");
+  }
+
+  Future<String> getEntryDesc(String id) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    DocumentSnapshot snap =
+    await _firestore.collection("Cases").doc(id).get();
+    return snap.get("Description");
+  }
+
+  Future<int> getEntryCard(String id) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    DocumentSnapshot snap =
+    await _firestore.collection("Cases").doc(id).get();
+    return snap.get("Card id");
+  }
+
 }
