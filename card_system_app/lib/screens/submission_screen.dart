@@ -36,7 +36,7 @@ class _SubmissionState extends State<Submission> {
     String res = await SubMethods().submitNewEntry(
         name: stuNameController.text,
         department: dropdownValue,
-        cardId: _redIsChecked?0:_yellowIsChecked?1:_blueIsChecked?2:_yellowIsChecked?3:9,
+        cardId: _redIsChecked?0:_yellowIsChecked?1:_blueIsChecked?2:_greenIsChecked?3:9,
         description: descriptionController.text,
         regNo: regNumController.text,
         dateTime: now.year.toString() +

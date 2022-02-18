@@ -38,6 +38,7 @@ class SubInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: TextField(
+        controller: textEditingController,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,

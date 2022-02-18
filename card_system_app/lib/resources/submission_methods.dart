@@ -23,16 +23,15 @@ class SubMethods {
           regNo.isEmpty ||
           dateTime.isEmpty) {
         final String caseId = dateTime + _auth.currentUser!.uid;
-        print(name);
-        if (name != " " || regNo != " ") {
+        if (name.trim() != "" || regNo.trim() != "") {
           // Add entry to database
           await _firestore.collection('Cases').doc(caseId).set({
-            'Name': name,
-            'Register Number': regNo,
+            'Name': name.trim(),
+            'Register Number': regNo.trim(),
             'Department': department,
             'Card id': cardId,
             'Date,Time': dateTime,
-            'Description': description,
+            'Description': description.trim(),
             'CaseId':caseId
           });
           res = 'success';
