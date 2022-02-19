@@ -12,7 +12,8 @@ class SubMethods {
     required int cardId,
     required String description,
     required String regNo,
-    required String dateTime,
+    required String date,
+    required String time,
   }) async {
     String res = "error occurred";
     try {
@@ -21,8 +22,8 @@ class SubMethods {
           cardId.isNaN ||
           description.isEmpty ||
           regNo.isEmpty ||
-          dateTime.isEmpty) {
-        final String caseId = dateTime + _auth.currentUser!.uid;
+          date.isEmpty) {
+        final String caseId = date + _auth.currentUser!.uid;
         if (name.trim() != "" || regNo.trim() != "") {
           // Add entry to database
           await _firestore.collection('Cases').doc(caseId).set({
@@ -30,7 +31,8 @@ class SubMethods {
             'Register Number': regNo.trim(),
             'Department': department,
             'Card id': cardId,
-            'Date,Time': dateTime,
+            'Date': date,
+            'Time':time,
             'Description': description.trim(),
             'CaseId':caseId
           });

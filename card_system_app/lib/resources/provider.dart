@@ -65,3 +65,21 @@ final entryDescProvider =
 final entryCardProvider = FutureProvider.family<int, String>((ref, id) async {
   return ref.read(databaseGeneralDataProvider).getEntryCard(id);
 });
+
+// Provider for fetching update data (date)
+
+final entryDateProvider = FutureProvider.family<String, String>((ref, id) async {
+  return ref.read(databaseGeneralDataProvider).getEntryDate(id);
+});
+
+// Provider for fetching update data (time)
+
+final entryTimeProvider = FutureProvider.family<String, String>((ref, id) async {
+  return ref.read(databaseGeneralDataProvider).getEntryTime(id);
+});
+
+// Provider for fetching update data (register number)
+
+final entryRegNoProvider = FutureProvider.family<String, String>((ref, id) async {
+  return ref.read(databaseGeneralDataProvider).getEntryRegNo(id);
+});

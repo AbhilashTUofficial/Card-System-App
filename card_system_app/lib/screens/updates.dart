@@ -113,7 +113,10 @@ Widget _updateTile(i) {
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
                 return ref.watch(entryNameProvider(updates[i])).when(
                     data: (String name) {
-                  return Text(name);
+                  return Text(
+                    name,
+                    style: const TextStyle(fontSize: 16, letterSpacing: 0.3),
+                  );
                 }, error: (Object e, _) {
                   return Container();
                 }, loading: () {
@@ -143,16 +146,47 @@ Widget _updateTile(i) {
             ),
             //*****************************************************************
 
-            // Entry Description
-            //=================================================================
             children: <Widget>[
+
+              // Register number
+              //---------------------------------------------------------------
+              ListTile(
+                title: Consumer(
+                  builder:
+                      (BuildContext context, WidgetRef ref, Widget? child) {
+                    return ref.watch(entryRegNoProvider(updates[i])).when(
+                        data: (String regNo) {
+                          return Text(
+                            "Reg Number: "+regNo,
+                          );
+                        }, error: (Object e, _) {
+                      return Container();
+                    }, loading: () {
+                      return const CircularProgressIndicator(
+                        color: Colors.white,
+                      );
+                    });
+                  },
+                ),
+              ),
+              //---------------------------------------------------------------
+
+
+              // Entry Description
+              //===============================================================
               ListTile(
                 title: Consumer(
                   builder:
                       (BuildContext context, WidgetRef ref, Widget? child) {
                     return ref.watch(entryDescProvider(updates[i])).when(
                         data: (String description) {
-                      return Text(description);
+                      return Text(
+                        description,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black54,
+                            letterSpacing: 0.3),
+                      );
                     }, error: (Object e, _) {
                       return Container();
                     }, loading: () {
@@ -162,9 +196,65 @@ Widget _updateTile(i) {
                     });
                   },
                 ),
+              ),
+              //===============================================================
+
+
+              ListTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                    // Entry Date
+                    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    Consumer(
+                      builder:
+                          (BuildContext context, WidgetRef ref, Widget? child) {
+                        return ref.watch(entryDateProvider(updates[i])).when(
+                            data: (String date) {
+                          return Text(
+                            date,
+                          );
+                        }, error: (Object e, _) {
+                          return Container();
+                        }, loading: () {
+                          return const CircularProgressIndicator(
+                            color: Colors.white,
+                          );
+                        });
+                      },
+                    ),
+                    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+                    // Entry Time
+                    //---------------------------------------------------------
+                    Consumer(
+                      builder:
+                          (BuildContext context, WidgetRef ref, Widget? child) {
+                        return ref.watch(entryTimeProvider(updates[i])).when(
+                            data: (String time) {
+                              return Text(
+                                time,
+                              );
+                            }, error: (Object e, _) {
+                          return Container();
+                        }, loading: () {
+                          return const CircularProgressIndicator(
+                            color: Colors.white,
+                          );
+                        });
+                      },
+                    ),
+                    //---------------------------------------------------------
+
+
+                    Text("Sub by")
+                  ],
+                ),
               )
             ],
-            //=================================================================
+
+
           ),
         );
       }, error: (Object e, _) {
@@ -175,7 +265,7 @@ Widget _updateTile(i) {
         ));
       }, loading: () {
         return const CircularProgressIndicator(
-          color: Colors.blue,
+          color: Colors.white,
         );
       });
     },

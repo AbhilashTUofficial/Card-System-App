@@ -99,4 +99,28 @@ class GeneralData {
     return snap.get("Card id");
   }
 
+  Future<String> getEntryDate(String id) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    DocumentSnapshot snap =
+    await _firestore.collection("Cases").doc(id).get();
+    return snap.get("Date");
+  }
+
+  Future<String> getEntryTime(String id) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    DocumentSnapshot snap =
+    await _firestore.collection("Cases").doc(id).get();
+    return snap.get("Time");
+  }
+
+  Future<String> getEntryRegNo(String id) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    DocumentSnapshot snap =
+    await _firestore.collection("Cases").doc(id).get();
+    return snap.get("Register Number");
+  }
+
 }

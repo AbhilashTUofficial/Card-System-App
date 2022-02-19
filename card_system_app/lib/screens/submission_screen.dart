@@ -34,16 +34,26 @@ class _SubmissionState extends State<Submission> {
 
   submitNewEntry() async {
     String res = await SubMethods().submitNewEntry(
-        name: stuNameController.text,
-        department: dropdownValue,
-        cardId: _redIsChecked?0:_yellowIsChecked?1:_blueIsChecked?2:_greenIsChecked?3:9,
-        description: descriptionController.text,
-        regNo: regNumController.text,
-        dateTime: now.year.toString() +
-            now.month.toString() +
-            now.day.toString() +
-            now.hour.toString() +
-            now.minute.toString());
+      name: stuNameController.text,
+      department: dropdownValue,
+      cardId: _redIsChecked
+          ? 0
+          : _yellowIsChecked
+              ? 1
+              : _blueIsChecked
+                  ? 2
+                  : _greenIsChecked
+                      ? 3
+                      : 9,
+      description: descriptionController.text,
+      regNo: regNumController.text,
+      date: now.year.toString() +
+          "/" +
+          now.month.toString() +
+          "/" +
+          now.day.toString(),
+      time: now.hour.toString() +":"+ now.minute.toString(),
+    );
     // SnackBar response
     if (res == 'success') {
       showSnackBar("Entry Successful", context);
@@ -253,8 +263,9 @@ class _SubmissionState extends State<Submission> {
                             expands: true,
                             maxLines: null,
                             decoration: const InputDecoration(
-                              border: InputBorder.none,
-                                filled: true, fillColor: Color(0x10050505)),
+                                border: InputBorder.none,
+                                filled: true,
+                                fillColor: Color(0x10050505)),
                             controller: descriptionController,
                           ),
                         ),
@@ -268,7 +279,7 @@ class _SubmissionState extends State<Submission> {
                       children: [
                         GestureDetector(
                           child: Container(
-                            margin: const EdgeInsets.only(left: 12,right: 10),
+                            margin: const EdgeInsets.only(left: 12, right: 10),
                             child: const Text(
                               "CANCEL",
                               style: TextStyle(
