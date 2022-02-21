@@ -1,4 +1,4 @@
-import 'package:card_system_app/resources/models/user.dart';
+import 'package:card_system_app/resources/models/crud_methods.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:state_notifier/state_notifier.dart';
 
@@ -82,4 +82,10 @@ final entryTimeProvider = FutureProvider.family<String, String>((ref, id) async 
 
 final entryRegNoProvider = FutureProvider.family<String, String>((ref, id) async {
   return ref.read(databaseGeneralDataProvider).getEntryRegNo(id);
+});
+
+// Provider for fetching update data (register number)
+
+final entrySubByProvider = FutureProvider.family<String, String>((ref, id) async {
+  return ref.read(databaseGeneralDataProvider).getEntrySubBy(id);
 });

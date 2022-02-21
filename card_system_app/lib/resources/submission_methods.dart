@@ -1,5 +1,7 @@
+import 'package:card_system_app/resources/models/crud_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SubMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -23,7 +25,7 @@ class SubMethods {
           description.isEmpty ||
           regNo.isEmpty ||
           date.isEmpty) {
-        final String caseId = date + _auth.currentUser!.uid;
+        final String caseId = date.replaceAll("/", "")+time.replaceAll(":", "") + _auth.currentUser!.uid;
         if (name.trim() != "" || regNo.trim() != "") {
           // Add entry to database
           await _firestore.collection('Cases').doc(caseId).set({
@@ -34,7 +36,8 @@ class SubMethods {
             'Date': date,
             'Time':time,
             'Description': description.trim(),
-            'CaseId':caseId
+            'CaseId':caseId,
+            'SubBy':await UserDetails().getUsername(),
           });
           res = 'success';
         }

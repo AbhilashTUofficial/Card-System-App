@@ -23,14 +23,19 @@ class _UpdatesState extends State<Updates> {
           return ref.watch(entryCountProvider).when(data: (int value) {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: value,
-                itemBuilder: (BuildContext context, int index) {
-                  return _updateTile(index);
-                },
+              child: RefreshIndicator(
+                onRefresh: () {
+                 return Future.delayed(const Duration(seconds: 2));},
+
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: value,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _updateTile(index);
+                  },
+                ),
               ),
             );
           }, error: (Object e, _) {
@@ -45,6 +50,7 @@ class _UpdatesState extends State<Updates> {
     );
   }
 }
+
 
 // UpdateTile widget
 
@@ -248,7 +254,26 @@ Widget _updateTile(i) {
                     //---------------------------------------------------------
 
 
-                    Text("Sub by")
+                    // Entry Submitted by
+                    //*********************************************************
+                    Consumer(
+                      builder:
+                          (BuildContext context, WidgetRef ref, Widget? child) {
+                        return ref.watch(entrySubByProvider(updates[i])).when(
+                            data: (String subBy) {
+                              return Text(
+                                "- "+subBy,
+                              );
+                            }, error: (Object e, _) {
+                          return Container();
+                        }, loading: () {
+                          return const CircularProgressIndicator(
+                            color: Colors.white,
+                          );
+                        });
+                      },
+                    ),
+                    //*********************************************************
                   ],
                 ),
               )
