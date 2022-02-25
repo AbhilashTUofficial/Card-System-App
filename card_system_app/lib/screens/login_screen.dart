@@ -49,10 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res == 'success') {
       showSnackBar("Success Logged In", context);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const ProviderScope(child: Home())));
-    } else if (res == 'wrong-password') {
-      showSnackBar("Your Password is wrong!", context);
-    } else if (res == 'too-many-requests') {
-      showSnackBar("Slow down buddy", context);
     } else {
       showSnackBar(res, context);
     }
@@ -114,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       textInputType: TextInputType.text,
                       textEditingController: _passwordController,
                       type: 'password',
+
                     ),
                   ],
                 ),

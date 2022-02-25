@@ -54,12 +54,8 @@ class _SignupScreenState extends State<SignupScreen> {
         showSnackBar("Success Signed Up", context);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => const ProviderScope(child: Home())));
-      } else if (res == 'invalid-email') {
-        showSnackBar("Check Your Email!", context);
-      } else if (res == 'weak-password') {
-        showSnackBar("Your Password is too weak!", context);
-      } else if (res == 'email-already-in-use') {
-        showSnackBar("This Email is already in use", context);
+      }else{
+        showSnackBar(res, context);
       }
     } else {
       showSnackBar("Confirm your password", context);

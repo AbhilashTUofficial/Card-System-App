@@ -41,6 +41,7 @@ class AuthInputField extends StatelessWidget {
       child: TextField(
         keyboardType: TextInputType.emailAddress,
         controller: textEditingController,
+        obscureText:type=='password'?true:false,
         style: const TextStyle(
           color: Colors.white,
           fontFamily: 'OpenSans',
@@ -51,6 +52,7 @@ class AuthInputField extends StatelessWidget {
           prefixIcon: _getIcon(),
           hintText: hintText,
           hintStyle: hintTextStyle,
+
         ),
       ),
     );
