@@ -42,7 +42,7 @@ class _UpdatesState extends State<Updates> {
             return Container();
           }, loading: () {
             return const CircularProgressIndicator(
-              color: Colors.white,
+              color: Colors.transparent,
             );
           });
         },

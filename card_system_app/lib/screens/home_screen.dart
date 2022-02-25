@@ -30,6 +30,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Scaffold(
       drawer: const SideNavBar(),
       appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
         title: const Text("NCAS Card System"),
         elevation: 0.5,
         actions: [

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -57,6 +56,8 @@ class GeneralData {
     final List<DocumentSnapshot> documents = result.docs;
     List caseIds = [];
     documents.forEach((data) => caseIds.add(data['CaseId']));
+    caseIds.sort();
+    caseIds=List.from(caseIds.reversed);
     return caseIds;
   }
 
