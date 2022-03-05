@@ -84,11 +84,49 @@ class SideNavBar extends StatelessWidget {
               decoration: const BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(color: Colors.black12, offset: Offset(0, 2))
               ]),
-              child: const Text('LOG OUT',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              child: const Text('CARDS INFO',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54)),
             ),
             onTap: () => signOut(),
           ),
+          GestureDetector(
+            child: Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(bottom: 2),
+              padding: const EdgeInsets.only(left: 18),
+              height: 46,
+              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(color: Colors.black12, offset: Offset(0, 2))
+              ]),
+              child: const Text('ABOUT',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54)),
+            ),
+            onTap: (){},
+          ),
+          GestureDetector(
+            child: Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(bottom: 2),
+              padding: const EdgeInsets.only(left: 18),
+              height: 46,
+              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(color: Colors.black12, offset: Offset(0, 2))
+              ]),
+              child: const Text('LOG OUT',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54)),
+            ),
+            onTap: () => signOut(),
+          ),
+
         ],
       ),
     );

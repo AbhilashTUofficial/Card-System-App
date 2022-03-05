@@ -1,3 +1,4 @@
+import 'package:card_system_app/Widgets/updatesLoading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,8 +26,8 @@ class _UpdatesState extends State<Updates> {
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: RefreshIndicator(
                 onRefresh: () {
-                 return Future.delayed(const Duration(seconds: 2));},
-
+                  return Future.delayed(const Duration(seconds: 2));
+                },
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -50,7 +51,6 @@ class _UpdatesState extends State<Updates> {
     );
   }
 }
-
 
 // UpdateTile widget
 
@@ -153,7 +153,6 @@ Widget _updateTile(i) {
             //*****************************************************************
 
             children: <Widget>[
-
               // Register number
               //---------------------------------------------------------------
               ListTile(
@@ -162,10 +161,10 @@ Widget _updateTile(i) {
                       (BuildContext context, WidgetRef ref, Widget? child) {
                     return ref.watch(entryRegNoProvider(updates[i])).when(
                         data: (String regNo) {
-                          return Text(
-                            "Reg Number: "+regNo,
-                          );
-                        }, error: (Object e, _) {
+                      return Text(
+                        "Reg Number: " + regNo,
+                      );
+                    }, error: (Object e, _) {
                       return Container();
                     }, loading: () {
                       return const CircularProgressIndicator(
@@ -176,7 +175,6 @@ Widget _updateTile(i) {
                 ),
               ),
               //---------------------------------------------------------------
-
 
               // Entry Description
               //===============================================================
@@ -205,12 +203,10 @@ Widget _updateTile(i) {
               ),
               //===============================================================
 
-
               ListTile(
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     // Entry Date
                     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                     Consumer(
@@ -239,10 +235,10 @@ Widget _updateTile(i) {
                           (BuildContext context, WidgetRef ref, Widget? child) {
                         return ref.watch(entryTimeProvider(updates[i])).when(
                             data: (String time) {
-                              return Text(
-                                time,
-                              );
-                            }, error: (Object e, _) {
+                          return Text(
+                            time,
+                          );
+                        }, error: (Object e, _) {
                           return Container();
                         }, loading: () {
                           return const CircularProgressIndicator(
@@ -253,7 +249,6 @@ Widget _updateTile(i) {
                     ),
                     //---------------------------------------------------------
 
-
                     // Entry Submitted by
                     //*********************************************************
                     Consumer(
@@ -261,10 +256,10 @@ Widget _updateTile(i) {
                           (BuildContext context, WidgetRef ref, Widget? child) {
                         return ref.watch(entrySubByProvider(updates[i])).when(
                             data: (String subBy) {
-                              return Text(
-                                "- "+subBy,
-                              );
-                            }, error: (Object e, _) {
+                          return Text(
+                            "- " + subBy,
+                          );
+                        }, error: (Object e, _) {
                           return Container();
                         }, loading: () {
                           return const CircularProgressIndicator(
@@ -278,8 +273,6 @@ Widget _updateTile(i) {
                 ),
               )
             ],
-
-
           ),
         );
       }, error: (Object e, _) {
@@ -289,9 +282,7 @@ Widget _updateTile(i) {
           style: TextStyle(color: Colors.grey, fontSize: 24),
         ));
       }, loading: () {
-        return const CircularProgressIndicator(
-          color: Colors.white,
-        );
+        return const UpdatesLoading();
       });
     },
   );

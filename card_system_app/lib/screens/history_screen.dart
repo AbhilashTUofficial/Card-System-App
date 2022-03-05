@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Widgets/infoCard.dart';
+import '../Widgets/cardsInfo.dart';
 
 class History extends StatelessWidget {
   const History({Key? key}) : super(key: key);

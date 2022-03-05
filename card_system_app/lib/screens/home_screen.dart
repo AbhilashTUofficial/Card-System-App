@@ -1,3 +1,4 @@
+import 'package:card_system_app/Widgets/cardsInfo.dart';
 import 'package:card_system_app/screens/history_screen.dart';
 import 'package:card_system_app/screens/submission_screen.dart';
 import 'package:card_system_app/screens/updates.dart';
@@ -5,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/sideNavBar.dart';
-import 'info_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -36,21 +36,19 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.search,
+              Icons.info_outline_rounded,
               size: 24,
               color: Colors.white,
             ),
             onPressed: () async {
-              // final FirebaseAuth _auth = FirebaseAuth.instance;
-              // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-              //
-              // final QuerySnapshot result =
-              //     await _firestore.collection('Cases').get();
-              // final List<DocumentSnapshot> documents = result.docs;
-              //
-              // documents.forEach((data) => print(data['CaseId']));
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const CardsInfo();
+                },
+              );
             },
-          ),
+          )
         ],
 
         // Tabs
