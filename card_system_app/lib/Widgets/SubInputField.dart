@@ -42,7 +42,7 @@ class SubInputField extends StatelessWidget {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
-            prefixIcon: _getIcon()),
+            prefixIcon: _getIcon(),),
       ),
     );
   }

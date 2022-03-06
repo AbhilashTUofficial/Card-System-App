@@ -15,7 +15,6 @@ class _UpdatesState extends State<Updates> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
       // entryCountProvider provide the total count of updates
       // Return int update count as value
