@@ -1,39 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-
-// User Auth methods
-final databaseUserProvider = Provider<UserDetails>((ref) => UserDetails());
-
-class UserDetails {
-
-  // FirebaseAuth instance & FirebaseFirestore instance
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // get username from the database
-  Future<String> getUsername() async {
-    User currentUser = _auth.currentUser!;
-
-    DocumentSnapshot snap =
-        await _firestore.collection("users").doc(currentUser.uid).get();
-    return snap.get("username");
-  }
-
-  //get user email from the database
-  Future<String> getUserEmail() async {
-    User currentUser = _auth.currentUser!;
-    DocumentSnapshot snap =
-        await _firestore.collection("users").doc(currentUser.uid).get();
-    return snap.get("email");
-  }
-}
 
 
 // Database CRUD methods
 final databaseGeneralDataProvider =
-    Provider<GeneralData>((ref) => GeneralData());
+Provider<GeneralData>((ref) => GeneralData());
 
 
 class GeneralData {
@@ -73,7 +44,7 @@ class GeneralData {
     List updates = [];
     caseIds.forEach((id) async {
       DocumentSnapshot snap =
-          await _firestore.collection("Cases").doc(id).get();
+      await _firestore.collection("Cases").doc(id).get();
       updates.add(
           [snap.get("Name"), snap.get("Department"), snap.get("Description"),snap.get("Card id")]);
     });
@@ -151,6 +122,18 @@ class GeneralData {
     DocumentSnapshot snap =
     await _firestore.collection("Cases").doc(id).get();
     return snap.get("SubBy");
+  }
+
+
+  // get entry cards  from Students collection
+  Future<List> getCards(String regNo) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    DocumentSnapshot snap =
+    await _firestore.collection("Students").doc(regNo).get();
+    return [
+      snap.get('redCards'),snap.get('yellowCards'),snap.get('blueCards'),snap.get('greenCards'),
+    ];
   }
 
 }

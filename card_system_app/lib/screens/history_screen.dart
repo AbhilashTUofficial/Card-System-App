@@ -1,3 +1,4 @@
+import 'package:card_system_app/Widgets/viewHistory.dart';
 import 'package:flutter/material.dart';
 
 class History extends StatefulWidget {
@@ -53,7 +54,7 @@ class _HistoryState extends State<History> {
             physics: const BouncingScrollPhysics(),
             itemCount: 5,
             itemBuilder: (BuildContext context, int index) {
-              return _historyTile(index);
+              return _historyTile(context,index);
             },
           ),
         ],
@@ -62,7 +63,7 @@ class _HistoryState extends State<History> {
   }
 }
 
-Widget _historyTile(regNo) {
+Widget _historyTile(BuildContext context,regNo) {
   return Card(
     child: ExpansionTile(
       tilePadding: const EdgeInsets.all(10),
@@ -166,7 +167,15 @@ Widget _historyTile(regNo) {
               "View History",
               style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
             ),
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ViewHistory();
+                },
+              );
+
+            },
           ),
         )
       ],

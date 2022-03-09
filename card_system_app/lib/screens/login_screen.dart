@@ -2,7 +2,7 @@ import 'package:card_system_app/Palette/constants.dart';
 import 'package:card_system_app/Widgets/authInputField.dart';
 import 'package:card_system_app/Widgets/logoSpace.dart';
 import 'package:card_system_app/Widgets/showSnackBar.dart';
-import 'package:card_system_app/resources/auth_methods.dart';
+import 'package:card_system_app/resources/CRUD/auth_methods.dart';
 import 'package:card_system_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

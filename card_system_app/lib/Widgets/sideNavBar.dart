@@ -1,7 +1,7 @@
 import 'package:card_system_app/resources/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:card_system_app/resources/auth_methods.dart';
+import 'package:card_system_app/resources/CRUD/auth_methods.dart';
 
 class SideNavBar extends StatelessWidget {
   const SideNavBar({Key? key}) : super(key: key);

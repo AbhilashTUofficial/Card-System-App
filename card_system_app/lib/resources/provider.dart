@@ -1,6 +1,6 @@
-import 'package:card_system_app/resources/models/crud_methods.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:state_notifier/state_notifier.dart';
+import 'CRUD/general_methods.dart';
+import 'CRUD/user_methods.dart';
 
 // User Providers
 //***************************************************************************//
@@ -88,4 +88,10 @@ final entryRegNoProvider = FutureProvider.family<String, String>((ref, id) async
 
 final entrySubByProvider = FutureProvider.family<String, String>((ref, id) async {
   return ref.read(databaseGeneralDataProvider).getEntrySubBy(id);
+});
+
+// Provider for cards array (register number)
+
+final cardsArrayProvider = FutureProvider.family<List, String>((ref, regNo) async {
+  return ref.read(databaseGeneralDataProvider).getCards(regNo);
 });

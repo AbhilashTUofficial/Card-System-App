@@ -1,4 +1,4 @@
-import 'package:card_system_app/resources/submission_methods.dart';
+import 'package:card_system_app/resources/CRUD/submission_methods.dart';
 import 'package:flutter/material.dart';
 
 import '../Widgets/SubInputField.dart';
@@ -55,11 +55,7 @@ class _SubmissionState extends State<Submission> {
       time: now.hour.toString() +":"+ now.minute.toString(),
     );
     // SnackBar response
-    if (res == 'success') {
-      showSnackBar("Entry Successful", context);
-    } else if (res == 'error occurred') {
-      showSnackBar("Error Occurred", context);
-    }
+    showSnackBar(res, context);
   }
 
   @override
