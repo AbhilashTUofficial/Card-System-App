@@ -1,8 +1,6 @@
-import 'package:card_system_app/resources/CRUD/general_methods.dart';
-import 'package:card_system_app/resources/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 import 'user_methods.dart';
 
@@ -29,14 +27,15 @@ class SubMethods {
           regNo.isEmpty ||
           date.isEmpty) {
         final String caseId = date.replaceAll("/", "") +
-            time.replaceAll(":", "") + _auth.currentUser!.uid;
-        if (name.trim() != "" || regNo.trim() != "") {
+            time.replaceAll(":", "") +
+            _auth.currentUser!.uid;
+        if (name.trim() != "" && regNo.trim() != "") {
           try {
             // Verify Register number
             int ib = int.parse(regNo.substring(0, 2));
             int jb = int.parse(regNo.substring(2, 4));
             if (ib < jb) {
-              // Add entry to database
+              // Add entry to Cases collection
               await _firestore.collection('Cases').doc(caseId).set({
                 'Name': name.trim(),
                 'Register Number': regNo.trim(),
@@ -48,21 +47,41 @@ class SubMethods {
                 'CaseId': caseId,
                 'SubBy': await UserDetails().getUsername(),
               });
+
+              // Add entry to Students collection
               await _firestore.collection('Students').doc(regNo).set({
+                'Name': name.trim(),
                 'Register': regNo,
                 'Department': department,
                 'Course': 'N/A',
                 'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
-                'Phone number':'N/A',
-                'Address':'N/A'
+                'Phone number': 'N/A',
+                'Address': 'N/A',
               });
-              _cardFunc(regNo);
+
+              switch (cardId) {
+                case 0:
+                  {
+                    await _firestore.collection("Students").doc(regNo).update({
+                      'Red Cards': FieldValue.arrayUnion([caseId])
+                    });
+
+                  }
+              }
+
+
+              // Add entry to SearchIndex collection
+              await _firestore
+                  .collection("SearchIndex")
+                  .doc("registerNumbers")
+                  .update({
+                'RegisterNumber': FieldValue.arrayUnion([regNo])
+              });
             }
             res = "Verify your Register number";
           } catch (e) {
             res = "Verify your Register number";
           }
-
 
           res = 'Your Submission Successful';
         } else {
@@ -74,9 +93,4 @@ class SubMethods {
     }
     return res;
   }
-}
-
-void _cardFunc(regNo) async{
-print(cardsArrayProvider(regNo));
-List cards=(cardsArrayProvider(regNo)) as List;
 }

@@ -95,3 +95,30 @@ final entrySubByProvider = FutureProvider.family<String, String>((ref, id) async
 final cardsArrayProvider = FutureProvider.family<List, String>((ref, regNo) async {
   return ref.read(databaseGeneralDataProvider).getCards(regNo);
 });
+
+// History Providers
+//***************************************************************************//
+
+// Provider for fetching history count
+
+final historyCountProvider = FutureProvider<List>((ref) async {
+  return ref.read(databaseGeneralDataProvider).getHistory();
+});
+
+// Provider for fetching history data (name)
+
+final historyNameProvider = FutureProvider.family<String,String>((ref,regNo) async {
+  return ref.read(databaseGeneralDataProvider).getHistoryName(regNo);
+});
+
+// Provider for fetching history data (Department name)
+
+final historyDeptProvider = FutureProvider.family<String,String>((ref,regNo) async {
+  return ref.read(databaseGeneralDataProvider).getHistoryDept(regNo);
+});
+
+// Provider for fetching history data (Batch)
+
+final historyBatchProvider = FutureProvider.family<String,String>((ref,regNo) async {
+  return ref.read(databaseGeneralDataProvider).getHistoryBatch(regNo);
+});
