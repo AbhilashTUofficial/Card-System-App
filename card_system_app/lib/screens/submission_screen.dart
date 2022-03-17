@@ -22,7 +22,6 @@ class _SubmissionState extends State<Submission> {
   bool _greenIsChecked = false;
   String dropdownValue = 'Dept of Computer Science';
 
-  DateTime now = DateTime.now();
 
   @override
   void dispose() {
@@ -47,12 +46,6 @@ class _SubmissionState extends State<Submission> {
                       : 9,
       description: descriptionController.text,
       regNo: regNumController.text,
-      date: now.year.toString() +
-          "/" +
-          now.month.toString() +
-          "/" +
-          now.day.toString(),
-      time: now.hour.toString() +":"+ now.minute.toString(),
     );
     // SnackBar response
     showSnackBar(res, context);

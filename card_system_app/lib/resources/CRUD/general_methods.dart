@@ -11,7 +11,7 @@ class GeneralData {
 
   // get entry count from database
   Future<int> getEntryCount() async {
-    final QuerySnapshot qSnap = await _firestore.collection("Cases").get();
+    final QuerySnapshot qSnap = await _firestore.collection("Recent").get();
     final int count = qSnap.docs.length;
     return count;
   }
@@ -20,10 +20,21 @@ class GeneralData {
   Future<List> getEntryCaseId() async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-    final QuerySnapshot result = await _firestore.collection('Cases').get();
+    final QuerySnapshot result = await _firestore.collection('Recent').get();
     final List<DocumentSnapshot> documents = result.docs;
     List caseIds = [];
-    documents.forEach((data) => caseIds.add(data['CaseId']));
+    documents.forEach((data)=>caseIds.add(data['CaseId']));
+
+    // for(var i=0;i>=0;i++){
+    //   DocumentSnapshot data=caseIds[i];
+    //   DateTime upDate=data["TimeDate"];
+    //   DateTime cDate=upDate.add(const Duration(microseconds:86400000 ));
+    //
+    //   if(DateTime.now().compareTo(cDate).isNegative){
+    //     print("hi");
+    //   }
+    // }
+
     caseIds.sort();
     caseIds = List.from(caseIds.reversed);
     return caseIds;

@@ -277,8 +277,8 @@ Widget _updateTile(i) {
       }, error: (Object e, _) {
         return const Center(
             child: Text(
-          "No Entry yet",
-          style: TextStyle(color: Colors.grey, fontSize: 24),
+          "Error",
+          style: TextStyle(color: Colors.grey, fontSize: 16),
         ));
       }, loading: () {
         return const UpdatesLoading();

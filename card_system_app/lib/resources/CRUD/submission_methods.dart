@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 import 'user_methods.dart';
 
 class SubMethods {
@@ -15,8 +14,8 @@ class SubMethods {
     required int cardId,
     required String description,
     required String regNo,
-    required String date,
-    required String time,
+    // required String date,
+    // required String time,
   }) async {
     String res = "error occurred";
     try {
@@ -24,11 +23,23 @@ class SubMethods {
           department.isNotEmpty ||
           cardId.isNaN ||
           description.isEmpty ||
-          regNo.isEmpty ||
-          date.isEmpty) {
-        final String caseId = date.replaceAll("/", "") +
-            time.replaceAll(":", "") +
+          regNo.isEmpty) {
+        DateTime now = DateTime.now();
+
+        String date = now.year.toString() +
+            "/" +
+            now.month.toString() +
+            "/" +
+            now.day.toString();
+        String time = now.hour.toString() + ":" + now.minute.toString();
+        // String caseId = date.replaceAll("/", "") +
+        //     time.replaceAll(":", "") +
+        //     _auth.currentUser!.uid;
+
+        String caseId = DateTime.now().microsecondsSinceEpoch.toString()+
             _auth.currentUser!.uid;
+
+
         if (name.trim() != "" && regNo.trim() != "") {
           try {
             // Verify Register number
@@ -48,6 +59,11 @@ class SubMethods {
                 'SubBy': await UserDetails().getUsername(),
               });
 
+              await _firestore
+                  .collection('Recent')
+                  .doc(caseId)
+                  .set({'CaseId': caseId, 'TimeDate': DateTime.now().microsecondsSinceEpoch});
+
               // Add entry to Students collection
               await _firestore.collection('Students').doc(regNo).set({
                 'Name': name.trim(),
@@ -65,10 +81,29 @@ class SubMethods {
                     await _firestore.collection("Students").doc(regNo).update({
                       'Red Cards': FieldValue.arrayUnion([caseId])
                     });
-
+                  }
+                  break;
+                case 1:
+                  {
+                    await _firestore.collection("Students").doc(regNo).update({
+                      'Yellow Cards': FieldValue.arrayUnion([caseId])
+                    });
+                  }
+                  break;
+                case 2:
+                  {
+                    await _firestore.collection("Students").doc(regNo).update({
+                      'Blue Cards': FieldValue.arrayUnion([caseId])
+                    });
+                  }
+                  break;
+                case 3:
+                  {
+                    await _firestore.collection("Students").doc(regNo).update({
+                      'Green Cards': FieldValue.arrayUnion([caseId])
+                    });
                   }
               }
-
 
               // Add entry to SearchIndex collection
               await _firestore
