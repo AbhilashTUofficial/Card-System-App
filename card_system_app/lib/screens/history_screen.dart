@@ -140,33 +140,73 @@ Widget _historyTile(BuildContext context, history, i) {
             },
           ),
           SizedBox(
-            width: 100,
+            width: 300,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 6),
-                  height: 16,
-                  width: 16,
-                  decoration: const BoxDecoration(color: Colors.amber),
+                Consumer(
+                  builder:
+                      (BuildContext context, WidgetRef ref, Widget? child) {
+                    return ref
+                        .watch(historyRedCardsCountProvider(history[i]))
+                        .when(data: (List cards) {
+                      return redCards(cards.length);
+                    }, error: (Object e, _) {
+                      return Container();
+                    }, loading: () {
+                      return const CircularProgressIndicator(
+                        color: Colors.white,
+                      );
+                    });
+                  },
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 6),
-                  height: 16,
-                  width: 16,
-                  decoration: const BoxDecoration(color: Colors.blueAccent),
+                Consumer(
+                  builder:
+                      (BuildContext context, WidgetRef ref, Widget? child) {
+                    return ref
+                        .watch(historyYellowCardsCountProvider(history[i]))
+                        .when(data: (List cards) {
+                      return yellowCards(cards.length);
+                    }, error: (Object e, _) {
+                      return Container();
+                    }, loading: () {
+                      return const CircularProgressIndicator(
+                        color: Colors.white,
+                      );
+                    });
+                  },
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 6),
-                  height: 16,
-                  width: 16,
-                  decoration: const BoxDecoration(color: Colors.green),
+                Consumer(
+                  builder:
+                      (BuildContext context, WidgetRef ref, Widget? child) {
+                    return ref
+                        .watch(historyBlueCardsCountProvider(history[i]))
+                        .when(data: (List cards) {
+                      return blueCards(cards.length);
+                    }, error: (Object e, _) {
+                      return Container();
+                    }, loading: () {
+                      return const CircularProgressIndicator(
+                        color: Colors.white,
+                      );
+                    });
+                  },
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 6),
-                  height: 16,
-                  width: 16,
-                  decoration: const BoxDecoration(color: Colors.red),
+                Consumer(
+                  builder:
+                      (BuildContext context, WidgetRef ref, Widget? child) {
+                    return ref
+                        .watch(historyGreenCardsCountProvider(history[i]))
+                        .when(data: (List cards) {
+                      return greenCards(cards.length);
+                    }, error: (Object e, _) {
+                      return Container();
+                    }, loading: () {
+                      return const CircularProgressIndicator(
+                        color: Colors.white,
+                      );
+                    });
+                  },
                 ),
               ],
             ),
@@ -239,7 +279,7 @@ Widget _historyTile(BuildContext context, history, i) {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return ViewHistory(context,history[i]);
+                  return ViewHistory(context, history[i]);
                 },
               );
             },
@@ -247,5 +287,105 @@ Widget _historyTile(BuildContext context, history, i) {
         )
       ],
     ),
+  );
+}
+
+Container redCards(count) {
+  _card() {
+    return Container(
+      margin: const EdgeInsets.only(left: 2, top: 6),
+      height: 16,
+      width: 16,
+      decoration: const BoxDecoration(color: Colors.red),
+    );
+  }
+
+  return Container(
+    child: count == 1
+        ? _card()
+        : count == 2
+            ? Row(
+                children: [_card(), _card()],
+              )
+            : count == 3
+                ? Row(
+                    children: [_card(), _card(), _card()],
+                  )
+                : Container(),
+  );
+}
+
+Container yellowCards(count) {
+  _card() {
+    return Container(
+      margin: const EdgeInsets.only(left: 2, top: 6),
+      height: 16,
+      width: 16,
+      decoration: const BoxDecoration(color: Colors.amber),
+    );
+  }
+
+  return Container(
+    child: count == 1
+        ? _card()
+        : count == 2
+            ? Row(
+                children: [_card(), _card()],
+              )
+            : count == 3
+                ? Row(
+                    children: [_card(), _card(), _card()],
+                  )
+                : Container(),
+  );
+}
+
+Container blueCards(count) {
+  _card() {
+    return Container(
+      margin: const EdgeInsets.only(left: 2, top: 6),
+      height: 16,
+      width: 16,
+      decoration: const BoxDecoration(color: Colors.blueAccent),
+    );
+  }
+
+  return Container(
+    child: count == 1
+        ? _card()
+        : count == 2
+            ? Row(
+                children: [_card(), _card()],
+              )
+            : count == 3
+                ? Row(
+                    children: [_card(), _card(), _card()],
+                  )
+                : Container(),
+  );
+}
+
+Container greenCards(count) {
+  _card() {
+    return Container(
+      margin: const EdgeInsets.only(left: 2, top: 6),
+      height: 16,
+      width: 16,
+      decoration: const BoxDecoration(color: Colors.green),
+    );
+  }
+
+  return Container(
+    child: count == 1
+        ? _card()
+        : count == 2
+            ? Row(
+                children: [_card(), _card()],
+              )
+            : count == 3
+                ? Row(
+                    children: [_card(), _card(), _card()],
+                  )
+                : Container(),
   );
 }

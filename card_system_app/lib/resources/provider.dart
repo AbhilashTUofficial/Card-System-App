@@ -122,3 +122,27 @@ final historyDeptProvider = FutureProvider.family<String,String>((ref,regNo) asy
 final historyBatchProvider = FutureProvider.family<String,String>((ref,regNo) async {
   return ref.read(databaseGeneralDataProvider).getHistoryBatch(regNo);
 });
+
+// Provider for fetching history data (red cards)
+
+final historyRedCardsCountProvider = FutureProvider.family<List,String>((ref,regNo) async {
+  return ref.read(databaseGeneralDataProvider).getRedCardCount(regNo);
+});
+
+// Provider for fetching history data (yellow cards)
+
+final historyYellowCardsCountProvider = FutureProvider.family<List,String>((ref,regNo) async {
+  return ref.read(databaseGeneralDataProvider).getYellowCardCount(regNo);
+});
+
+// Provider for fetching history data (blue cards)
+
+final historyBlueCardsCountProvider = FutureProvider.family<List,String>((ref,regNo) async {
+  return ref.read(databaseGeneralDataProvider).getBlueCardCount(regNo);
+});
+
+// Provider for fetching history data (green cards)
+
+final historyGreenCardsCountProvider = FutureProvider.family<List,String>((ref,regNo) async {
+  return ref.read(databaseGeneralDataProvider).getGreenCardCount(regNo);
+});

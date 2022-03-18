@@ -1,3 +1,4 @@
+import 'package:card_system_app/resources/CRUD/cards_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -36,9 +37,8 @@ class SubMethods {
         //     time.replaceAll(":", "") +
         //     _auth.currentUser!.uid;
 
-        String caseId = DateTime.now().microsecondsSinceEpoch.toString()+
+        String caseId = DateTime.now().microsecondsSinceEpoch.toString() +
             _auth.currentUser!.uid;
-
 
         if (name.trim() != "" && regNo.trim() != "") {
           try {
@@ -59,59 +59,126 @@ class SubMethods {
                 'SubBy': await UserDetails().getUsername(),
               });
 
-              await _firestore
-                  .collection('Recent')
-                  .doc(caseId)
-                  .set({'CaseId': caseId, 'TimeDate': DateTime.now().microsecondsSinceEpoch});
-
-              // Add entry to Students collection
-              await _firestore.collection('Students').doc(regNo).set({
-                'Name': name.trim(),
-                'Register': regNo,
-                'Department': department,
-                'Course': 'N/A',
-                'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
-                'Phone number': 'N/A',
-                'Address': 'N/A',
+              await _firestore.collection('Recent').doc(caseId).set({
+                'CaseId': caseId,
+                'TimeDate': DateTime.now().microsecondsSinceEpoch
               });
 
-              switch (cardId) {
-                case 0:
-                  {
-                    await _firestore.collection("Students").doc(regNo).update({
-                      'Red Cards': FieldValue.arrayUnion([caseId])
-                    });
-                  }
-                  break;
-                case 1:
-                  {
-                    await _firestore.collection("Students").doc(regNo).update({
-                      'Yellow Cards': FieldValue.arrayUnion([caseId])
-                    });
-                  }
-                  break;
-                case 2:
-                  {
-                    await _firestore.collection("Students").doc(regNo).update({
-                      'Blue Cards': FieldValue.arrayUnion([caseId])
-                    });
-                  }
-                  break;
-                case 3:
-                  {
-                    await _firestore.collection("Students").doc(regNo).update({
-                      'Green Cards': FieldValue.arrayUnion([caseId])
-                    });
-                  }
+              final studentsSnapShot = await FirebaseFirestore.instance
+                  .collection('Students')
+                  .doc(regNo)
+                  .get();
+
+              if (studentsSnapShot == null || !studentsSnapShot.exists) {
+                await _firestore.collection("Students").doc(regNo).set({
+                  'Name': name.trim(),
+                  'Register': regNo,
+                  'Department': department,
+                  'Course': 'N/A',
+                  'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                  'Phone number': 'N/A',
+                  'Address': 'N/A',
+                  'Red Cards': FieldValue.arrayUnion([caseId]),
+                });
+              } else {
+                switch (cardId) {
+                  case 0:
+                    {
+
+                      await _firestore
+                          .collection("Students")
+                          .doc(regNo)
+                          .update({
+                        'Name': name.trim(),
+                        'Register': regNo,
+                        'Department': department,
+                        'Course': 'N/A',
+                        'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                        'Phone number': 'N/A',
+                        'Address': 'N/A',
+                        'Red Cards': FieldValue.arrayUnion([caseId]),
+                      });
+                    }
+                    break;
+                  case 1:
+                    {
+
+                      await _firestore
+                          .collection("Students")
+                          .doc(regNo)
+                          .update({
+                        'Name': name.trim(),
+                        'Register': regNo,
+                        'Department': department,
+                        'Course': 'N/A',
+                        'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                        'Phone number': 'N/A',
+                        'Address': 'N/A',
+                        'Yellow Cards': FieldValue.arrayUnion([caseId])
+                      });
+                    }
+                    break;
+                  case 2:
+                    {
+                      await _firestore
+                          .collection("Students")
+                          .doc(regNo)
+                          .update({
+                        'Name': name.trim(),
+                        'Register': regNo,
+                        'Department': department,
+                        'Course': 'N/A',
+                        'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                        'Phone number': 'N/A',
+                        'Address': 'N/A',
+                        'Blue Cards': FieldValue.arrayUnion([caseId])
+                      });
+                    }
+                    break;
+                  case 3:
+                    {
+                      await _firestore
+                          .collection("Students")
+                          .doc(regNo)
+                          .update({
+                        'Name': name.trim(),
+                        'Register': regNo,
+                        'Department': department,
+                        'Course': 'N/A',
+                        'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                        'Phone number': 'N/A',
+                        'Address': 'N/A',
+                        'Green Cards': FieldValue.arrayUnion([caseId])
+                      });
+                    }
+                }
               }
 
               // Add entry to SearchIndex collection
-              await _firestore
-                  .collection("SearchIndex")
+              final searchIndexSnapShot = await FirebaseFirestore.instance
+                  .collection('SearchIndex')
                   .doc("registerNumbers")
-                  .update({
-                'RegisterNumber': FieldValue.arrayUnion([regNo])
-              });
+                  .get();
+
+              if (searchIndexSnapShot == null || !searchIndexSnapShot.exists) {
+                await _firestore
+                    .collection("SearchIndex")
+                    .doc("registerNumbers")
+                    .set({
+                  'RegisterNumber': FieldValue.arrayUnion([regNo])
+                });
+              }else{
+                await _firestore
+                    .collection("SearchIndex")
+                    .doc("registerNumbers")
+                    .update({
+                  'RegisterNumber': FieldValue.arrayUnion([regNo])
+                });
+              }
+
+              CardsMethods().yellowCardCalc(regNo);
+              CardsMethods().blueCardCalc(regNo);
+
             }
             res = "Verify your Register number";
           } catch (e) {

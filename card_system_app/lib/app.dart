@@ -36,7 +36,7 @@ class CardSysApp extends StatelessWidget {
           // If Connection is not active but loading
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-                child: CircularProgressIndicator(color: Colors.white));
+                child: CircularProgressIndicator(color: Colors.blueAccent));
           }
 
           // If Connection is not active and not loading either
