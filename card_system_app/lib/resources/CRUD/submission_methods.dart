@@ -70,16 +70,77 @@ class SubMethods {
                   .get();
 
               if (studentsSnapShot == null || !studentsSnapShot.exists) {
-                await _firestore.collection("Students").doc(regNo).set({
-                  'Name': name.trim(),
-                  'Register': regNo,
-                  'Department': department,
-                  'Course': 'N/A',
-                  'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
-                  'Phone number': 'N/A',
-                  'Address': 'N/A',
-                  'Red Cards': FieldValue.arrayUnion([caseId]),
-                });
+                switch (cardId) {
+                  case 0:
+                    {
+
+                      await _firestore
+                          .collection("Students")
+                          .doc(regNo)
+                          .set({
+                        'Name': name.trim(),
+                        'Register': regNo,
+                        'Department': department,
+                        'Course': 'N/A',
+                        'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                        'Phone number': 'N/A',
+                        'Address': 'N/A',
+                        'Red Cards': FieldValue.arrayUnion([caseId]),
+                      });
+                    }
+                    break;
+                  case 1:
+                    {
+
+                      await _firestore
+                          .collection("Students")
+                          .doc(regNo)
+                          .set({
+                        'Name': name.trim(),
+                        'Register': regNo,
+                        'Department': department,
+                        'Course': 'N/A',
+                        'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                        'Phone number': 'N/A',
+                        'Address': 'N/A',
+                        'Yellow Cards': FieldValue.arrayUnion([caseId])
+                      });
+                    }
+                    break;
+                  case 2:
+                    {
+                      await _firestore
+                          .collection("Students")
+                          .doc(regNo)
+                          .set({
+                        'Name': name.trim(),
+                        'Register': regNo,
+                        'Department': department,
+                        'Course': 'N/A',
+                        'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                        'Phone number': 'N/A',
+                        'Address': 'N/A',
+                        'Blue Cards': FieldValue.arrayUnion([caseId])
+                      });
+                    }
+                    break;
+                  case 3:
+                    {
+                      await _firestore
+                          .collection("Students")
+                          .doc(regNo)
+                          .set({
+                        'Name': name.trim(),
+                        'Register': regNo,
+                        'Department': department,
+                        'Course': 'N/A',
+                        'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
+                        'Phone number': 'N/A',
+                        'Address': 'N/A',
+                        'Green Cards': FieldValue.arrayUnion([caseId])
+                      });
+                    }
+                }
               } else {
                 switch (cardId) {
                   case 0:
