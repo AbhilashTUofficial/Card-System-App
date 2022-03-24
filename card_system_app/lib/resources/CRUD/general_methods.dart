@@ -24,7 +24,7 @@ class GeneralData {
     final QuerySnapshot result = await _firestore.collection('Recent').get();
     final List<DocumentSnapshot> documents = result.docs;
     List caseIds = [];
-    documents.forEach((data)=>caseIds.add(data['CaseId']));
+    documents.forEach((data) => caseIds.add(data['CaseId']));
 
     // for(var i=0;i>=0;i++){
     //   DocumentSnapshot data=caseIds[i];
@@ -42,92 +42,22 @@ class GeneralData {
   }
 
   // get entry data from the database
-  Future<List> getUpdateData() async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    final QuerySnapshot result = await _firestore.collection('Cases').get();
-    final List<DocumentSnapshot> documents = result.docs;
-    List caseIds = [];
-    documents.forEach((data) => caseIds.add(data['CaseId']));
-
-    List updates = [];
-    caseIds.forEach((id) async {
-      DocumentSnapshot snap =
-          await _firestore.collection("Cases").doc(id).get();
-      updates.add([
-        snap.get("Name"),
-        snap.get("Department"),
-        snap.get("Description"),
-        snap.get("Card id")
-      ]);
-    });
-
-    return updates;
-  }
-
-  // get entry name from database
-  Future<String> getEntryName(String id) async {
+  Future<List> getUpdateData(String id) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
     DocumentSnapshot snap = await _firestore.collection("Cases").doc(id).get();
-    return snap.get("Name");
+    return [
+      snap.get("Name"),
+      snap.get("Department"),
+      snap.get("Card id"),
+      snap.get("Register Number"),
+      snap.get("Description"),
+      snap.get("SubBy"),
+      snap.get("Time"),
+      snap.get("Date"),
+    ];
   }
 
-  // get entry department from database
-  Future<String> getEntryDept(String id) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    DocumentSnapshot snap = await _firestore.collection("Cases").doc(id).get();
-    return snap.get("Department");
-  }
-
-  // get entry description from database
-  Future<String> getEntryDesc(String id) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    DocumentSnapshot snap = await _firestore.collection("Cases").doc(id).get();
-    return snap.get("Description");
-  }
-
-  // get entry card id from database
-  Future<int> getEntryCard(String id) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    DocumentSnapshot snap = await _firestore.collection("Cases").doc(id).get();
-    return snap.get("Card id");
-  }
-
-  // get entry date from database
-  Future<String> getEntryDate(String id) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    DocumentSnapshot snap = await _firestore.collection("Cases").doc(id).get();
-    return snap.get("Date");
-  }
-
-  // get entry time from database
-  Future<String> getEntryTime(String id) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    DocumentSnapshot snap = await _firestore.collection("Cases").doc(id).get();
-    return snap.get("Time");
-  }
-
-  // get entry register number from database
-  Future<String> getEntryRegNo(String id) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    DocumentSnapshot snap = await _firestore.collection("Cases").doc(id).get();
-    return snap.get("Register Number");
-  }
-
-  // get entry "submitted by"  from database
-  Future<String> getEntrySubBy(String id) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    DocumentSnapshot snap = await _firestore.collection("Cases").doc(id).get();
-    return snap.get("SubBy");
-  }
 
   // get entry cards  from Students collection
   Future<List> getCards(String regNo) async {
@@ -143,11 +73,11 @@ class GeneralData {
     ];
   }
 
-
   // get history count from database
   Future<List> getHistory() async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap = await _firestore.collection("SearchIndex").doc("registerNumbers").get();
+    DocumentSnapshot snap =
+        await _firestore.collection("SearchIndex").doc("registerNumbers").get();
     final List history = snap.get("RegisterNumber");
     return history;
   }
@@ -155,7 +85,8 @@ class GeneralData {
   // get history name form database
   Future<String> getHistoryName(regNo) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap = await _firestore.collection("Students").doc(regNo).get();
+    DocumentSnapshot snap =
+        await _firestore.collection("Students").doc(regNo).get();
     final String name = snap.get("Name");
     return name;
   }
@@ -163,7 +94,8 @@ class GeneralData {
   // get history department form database
   Future<String> getHistoryDept(regNo) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap = await _firestore.collection("Students").doc(regNo).get();
+    DocumentSnapshot snap =
+        await _firestore.collection("Students").doc(regNo).get();
     final String dept = snap.get("Department");
     return dept;
   }
@@ -171,7 +103,8 @@ class GeneralData {
   // get history batch form database
   Future<String> getHistoryBatch(regNo) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap = await _firestore.collection("Students").doc(regNo).get();
+    DocumentSnapshot snap =
+        await _firestore.collection("Students").doc(regNo).get();
     final String dept = snap.get("Batch");
     return dept;
   }
@@ -179,7 +112,8 @@ class GeneralData {
   // get history red cards from Students collection
   Future<List> getRedCardCount(regNo) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap = await _firestore.collection("Students").doc(regNo).get();
+    DocumentSnapshot snap =
+        await _firestore.collection("Students").doc(regNo).get();
     final List cards = snap.get("Red Cards");
     return cards;
   }
@@ -187,7 +121,8 @@ class GeneralData {
   // get history yellow cards from Students collection
   Future<List> getYellowCardCount(regNo) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap = await _firestore.collection("Students").doc(regNo).get();
+    DocumentSnapshot snap =
+        await _firestore.collection("Students").doc(regNo).get();
     List cards = snap.get("Yellow Cards");
     return cards;
   }
@@ -195,7 +130,8 @@ class GeneralData {
   // get history blue cards from Students collection
   Future<List> getBlueCardCount(regNo) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap = await _firestore.collection("Students").doc(regNo).get();
+    DocumentSnapshot snap =
+        await _firestore.collection("Students").doc(regNo).get();
     final List cards = snap.get("Blue Cards");
     return cards;
   }
@@ -203,10 +139,9 @@ class GeneralData {
   // get history red cards from Students collection
   Future<List> getGreenCardCount(regNo) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap = await _firestore.collection("Students").doc(regNo).get();
+    DocumentSnapshot snap =
+        await _firestore.collection("Students").doc(regNo).get();
     final List cards = snap.get("Green Cards");
     return cards;
   }
-
-
 }
