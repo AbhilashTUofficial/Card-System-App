@@ -35,16 +35,8 @@ final caseIdProvider = FutureProvider<List>((ref) async {
 // Provider for fetching update data (name,date,time,card color,department,description,sub by and etc)
 // All in single list
 
-final updateProvider = FutureProvider.family<List,String>((ref,id) async {
+final updateProvider = FutureProvider.family<List, String>((ref, id) async {
   return ref.read(databaseGeneralDataProvider).getUpdateData(id);
-});
-
-
-
-// Provider for cards array (register number)
-
-final cardsArrayProvider = FutureProvider.family<List, String>((ref, regNo) async {
-  return ref.read(databaseGeneralDataProvider).getCards(regNo);
 });
 
 // History Providers
@@ -56,44 +48,9 @@ final historyCountProvider = FutureProvider<List>((ref) async {
   return ref.read(databaseGeneralDataProvider).getHistory();
 });
 
-// Provider for fetching history data (name)
+// Provider for fetching history data (name,cards,department, and etc)
+// All in single list
 
-final historyNameProvider = FutureProvider.family<String,String>((ref,regNo) async {
-  return ref.read(databaseGeneralDataProvider).getHistoryName(regNo);
-});
-
-// Provider for fetching history data (Department name)
-
-final historyDeptProvider = FutureProvider.family<String,String>((ref,regNo) async {
-  return ref.read(databaseGeneralDataProvider).getHistoryDept(regNo);
-});
-
-// Provider for fetching history data (Batch)
-
-final historyBatchProvider = FutureProvider.family<String,String>((ref,regNo) async {
-  return ref.read(databaseGeneralDataProvider).getHistoryBatch(regNo);
-});
-
-// Provider for fetching history data (red cards)
-
-final historyRedCardsCountProvider = FutureProvider.family<List,String>((ref,regNo) async {
-  return ref.read(databaseGeneralDataProvider).getRedCardCount(regNo);
-});
-
-// Provider for fetching history data (yellow cards)
-
-final historyYellowCardsCountProvider = FutureProvider.family<List,String>((ref,regNo) async {
-  return ref.read(databaseGeneralDataProvider).getYellowCardCount(regNo);
-});
-
-// Provider for fetching history data (blue cards)
-
-final historyBlueCardsCountProvider = FutureProvider.family<List,String>((ref,regNo) async {
-  return ref.read(databaseGeneralDataProvider).getBlueCardCount(regNo);
-});
-
-// Provider for fetching history data (green cards)
-
-final historyGreenCardsCountProvider = FutureProvider.family<List,String>((ref,regNo) async {
-  return ref.read(databaseGeneralDataProvider).getGreenCardCount(regNo);
+final historyProvider = FutureProvider.family<List, String>((ref, regNo) async {
+  return ref.read(databaseGeneralDataProvider).getHistoryData(regNo);
 });

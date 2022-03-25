@@ -74,7 +74,6 @@ Widget _updateTile(i) {
                   tilePadding: const EdgeInsets.all(10),
 
                   // Circular Avatar and Card indicator
-                  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                   leading: SizedBox(
                     width: 60,
                     child: Stack(

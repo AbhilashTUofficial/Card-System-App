@@ -86,207 +86,129 @@ class _HistoryState extends State<History> {
 }
 
 Widget _historyTile(BuildContext context, history, i) {
-  return Card(
-    child: ExpansionTile(
-      tilePadding: const EdgeInsets.all(10),
-      // Circular Avatar and Card indicator
-      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-      leading: const SizedBox(
-        width: 60,
-        child: CircleAvatar(
-          backgroundImage: AssetImage("assets/img/profile_img.png"),
-          radius: 32,
-        ),
-      ),
-      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  return Consumer(
+    builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      return ref.watch(historyProvider(history[i])).when(data: (List data) {
+        String name = data[0];
+        String department = data[1];
+        String regNo = data[2];
+        String batch = data[3];
+        List _redCards = data[4];
+        List _yellowCards = data[5];
+        List _blueCards = data[6];
+        List _greenCards = data[7];
+        return Card(
+          child: ExpansionTile(
+            tilePadding: const EdgeInsets.all(10),
+            // Circular Avatar and Card indicator
+            //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            leading: const SizedBox(
+              width: 60,
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/img/profile_img.png"),
+                radius: 32,
+              ),
+            ),
+            //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-      // History name
-      //-----------------------------------------------------------------------
-      title: Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child) {
-          return ref.watch(historyNameProvider(history[i])).when(
-              data: (String name) {
-            return Text(
+            // History name
+            //-----------------------------------------------------------------------
+            title: Text(
               name,
-            );
-          }, error: (Object e, _) {
-            return Container();
-          }, loading: () {
-            return const CircularProgressIndicator(
-              color: Colors.white,
-            );
-          });
-        },
-      ),
-      //-----------------------------------------------------------------------
+            ),
+            //-----------------------------------------------------------------------
 
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Consumer(
-            builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              return ref.watch(historyDeptProvider(history[i])).when(
-                  data: (String dept) {
-                return Text(
-                  dept,
-                );
-              }, error: (Object e, _) {
-                return Container();
-              }, loading: () {
-                return const CircularProgressIndicator(
-                  color: Colors.white,
-                );
-              });
-            },
-          ),
-          SizedBox(
-            width: 300,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Consumer(
-                  builder:
-                      (BuildContext context, WidgetRef ref, Widget? child) {
-                    return ref
-                        .watch(historyRedCardsCountProvider(history[i]))
-                        .when(data: (List cards) {
-                      return redCards(cards.length);
-                    }, error: (Object e, _) {
-                      return Container();
-                    }, loading: () {
-                      return const CircularProgressIndicator(
-                        color: Colors.white,
-                      );
-                    });
-                  },
+                Text(
+                  department,
                 ),
-                Consumer(
-                  builder:
-                      (BuildContext context, WidgetRef ref, Widget? child) {
-                    return ref
-                        .watch(historyYellowCardsCountProvider(history[i]))
-                        .when(data: (List cards) {
-                      return yellowCards(cards.length);
-                    }, error: (Object e, _) {
-                      return Container();
-                    }, loading: () {
-                      return const CircularProgressIndicator(
-                        color: Colors.white,
-                      );
-                    });
-                  },
-                ),
-                Consumer(
-                  builder:
-                      (BuildContext context, WidgetRef ref, Widget? child) {
-                    return ref
-                        .watch(historyBlueCardsCountProvider(history[i]))
-                        .when(data: (List cards) {
-                      return blueCards(cards.length);
-                    }, error: (Object e, _) {
-                      return Container();
-                    }, loading: () {
-                      return const CircularProgressIndicator(
-                        color: Colors.white,
-                      );
-                    });
-                  },
-                ),
-                Consumer(
-                  builder:
-                      (BuildContext context, WidgetRef ref, Widget? child) {
-                    return ref
-                        .watch(historyGreenCardsCountProvider(history[i]))
-                        .when(data: (List cards) {
-                      return greenCards(cards.length);
-                    }, error: (Object e, _) {
-                      return Container();
-                    }, loading: () {
-                      return const CircularProgressIndicator(
-                        color: Colors.white,
-                      );
-                    });
-                  },
-                ),
+                SizedBox(
+                  width: 300,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      redCards(_redCards.length),
+                      yellowCards(_yellowCards.length),
+                      blueCards(_blueCards.length),
+                      greenCards(_greenCards.length),
+                    ],
+                  ),
+                )
               ],
             ),
-          )
-        ],
-      ),
-      children: <Widget>[
-        ListTile(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Course : N/A",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 1),
-              ),
-              Text(
-                "Register number : " + history[i],
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 1),
-              ),
-              Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  return ref.watch(historyBatchProvider(history[i])).when(
-                      data: (String batch) {
-                    return Text(
+            children: <Widget>[
+              ListTile(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Course : N/A",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1),
+                    ),
+                    Text(
+                      "Register number : " + history[i],
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1),
+                    ),
+                    Text(
                       "Batch : " + batch,
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           letterSpacing: 1),
+                    ),
+                    const Text(
+                      "Phone number : N/A",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1),
+                    ),
+                    const Text(
+                      "Address : N/A",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                title: GestureDetector(
+                  child: const Text(
+                    "View History",
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ViewHistory(context, history[i]);
+                      },
                     );
-                  }, error: (Object e, _) {
-                    return Container();
-                  }, loading: () {
-                    return const CircularProgressIndicator(
-                      color: Colors.white,
-                    );
-                  });
-                },
-              ),
-              const Text(
-                "Phone number : N/A",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 1),
-              ),
-              const Text(
-                "Address : N/A",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 1),
-              ),
+                  },
+                ),
+              )
             ],
           ),
-        ),
-        ListTile(
-          title: GestureDetector(
-            child: const Text(
-              "View History",
-              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-            ),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return ViewHistory(context, history[i]);
-                },
-              );
-            },
-          ),
-        )
-      ],
-    ),
+        );
+      }, error: (Object e, _) {
+        return Container();
+      }, loading: () {
+        return const CircularProgressIndicator(
+          color: Colors.white,
+        );
+      });
+    },
   );
 }
 

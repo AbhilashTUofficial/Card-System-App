@@ -73,11 +73,7 @@ class SubMethods {
                 switch (cardId) {
                   case 0:
                     {
-
-                      await _firestore
-                          .collection("Students")
-                          .doc(regNo)
-                          .set({
+                      await _firestore.collection("Students").doc(regNo).set({
                         'Name': name.trim(),
                         'Register': regNo,
                         'Department': department,
@@ -86,16 +82,15 @@ class SubMethods {
                         'Phone number': 'N/A',
                         'Address': 'N/A',
                         'Red Cards': FieldValue.arrayUnion([caseId]),
+                        'Yellow Cards': FieldValue.arrayUnion([]),
+                        'Blue Cards': FieldValue.arrayUnion([]),
+                        'Green Cards': FieldValue.arrayUnion([]),
                       });
                     }
                     break;
                   case 1:
                     {
-
-                      await _firestore
-                          .collection("Students")
-                          .doc(regNo)
-                          .set({
+                      await _firestore.collection("Students").doc(regNo).set({
                         'Name': name.trim(),
                         'Register': regNo,
                         'Department': department,
@@ -103,16 +98,16 @@ class SubMethods {
                         'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
                         'Phone number': 'N/A',
                         'Address': 'N/A',
-                        'Yellow Cards': FieldValue.arrayUnion([caseId])
+                        'Red Cards': FieldValue.arrayUnion([]),
+                        'Yellow Cards': FieldValue.arrayUnion([caseId]),
+                        'Blue Cards': FieldValue.arrayUnion([]),
+                        'Green Cards': FieldValue.arrayUnion([]),
                       });
                     }
                     break;
                   case 2:
                     {
-                      await _firestore
-                          .collection("Students")
-                          .doc(regNo)
-                          .set({
+                      await _firestore.collection("Students").doc(regNo).set({
                         'Name': name.trim(),
                         'Register': regNo,
                         'Department': department,
@@ -120,16 +115,16 @@ class SubMethods {
                         'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
                         'Phone number': 'N/A',
                         'Address': 'N/A',
-                        'Blue Cards': FieldValue.arrayUnion([caseId])
+                        'Red Cards': FieldValue.arrayUnion([]),
+                        'Yellow Cards': FieldValue.arrayUnion([]),
+                        'Blue Cards': FieldValue.arrayUnion([caseId]),
+                        'Green Cards': FieldValue.arrayUnion([]),
                       });
                     }
                     break;
                   case 3:
                     {
-                      await _firestore
-                          .collection("Students")
-                          .doc(regNo)
-                          .set({
+                      await _firestore.collection("Students").doc(regNo).set({
                         'Name': name.trim(),
                         'Register': regNo,
                         'Department': department,
@@ -137,7 +132,10 @@ class SubMethods {
                         'Batch': '20' + ib.toString() + ' - 20' + jb.toString(),
                         'Phone number': 'N/A',
                         'Address': 'N/A',
-                        'Green Cards': FieldValue.arrayUnion([caseId])
+                        'Red Cards': FieldValue.arrayUnion([]),
+                        'Yellow Cards': FieldValue.arrayUnion([]),
+                        'Blue Cards': FieldValue.arrayUnion([]),
+                        'Green Cards': FieldValue.arrayUnion([caseId]),
                       });
                     }
                 }
@@ -145,7 +143,6 @@ class SubMethods {
                 switch (cardId) {
                   case 0:
                     {
-
                       await _firestore
                           .collection("Students")
                           .doc(regNo)
@@ -163,7 +160,6 @@ class SubMethods {
                     break;
                   case 1:
                     {
-
                       await _firestore
                           .collection("Students")
                           .doc(regNo)
@@ -228,7 +224,7 @@ class SubMethods {
                     .set({
                   'RegisterNumber': FieldValue.arrayUnion([regNo])
                 });
-              }else{
+              } else {
                 await _firestore
                     .collection("SearchIndex")
                     .doc("registerNumbers")
@@ -239,7 +235,6 @@ class SubMethods {
 
               CardsMethods().yellowCardCalc(regNo);
               CardsMethods().blueCardCalc(regNo);
-
             }
             res = "Verify your Register number";
           } catch (e) {

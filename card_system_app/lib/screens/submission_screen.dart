@@ -45,7 +45,7 @@ class _SubmissionState extends State<Submission> {
                       ? 3
                       : 9,
       description: descriptionController.text,
-      regNo: regNumController.text,
+      regNo: regNumController.text.toUpperCase(),
     );
     // SnackBar response
     showSnackBar(res, context);

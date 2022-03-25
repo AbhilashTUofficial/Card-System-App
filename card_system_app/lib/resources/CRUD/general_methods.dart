@@ -1,4 +1,3 @@
-import 'package:card_system_app/resources/CRUD/cards_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -58,21 +57,6 @@ class GeneralData {
     ];
   }
 
-
-  // get entry cards  from Students collection
-  Future<List> getCards(String regNo) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-    DocumentSnapshot snap =
-        await _firestore.collection("Students").doc(regNo).get();
-    return [
-      snap.get('Red Cards'),
-      snap.get('Yellow Cards'),
-      snap.get('Blue Cards'),
-      snap.get('Green Cards'),
-    ];
-  }
-
   // get history count from database
   Future<List> getHistory() async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -82,66 +66,20 @@ class GeneralData {
     return history;
   }
 
-  // get history name form database
-  Future<String> getHistoryName(regNo) async {
+  // get history data from the database
+  Future<List> getHistoryData(String regNo) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     DocumentSnapshot snap =
         await _firestore.collection("Students").doc(regNo).get();
-    final String name = snap.get("Name");
-    return name;
-  }
-
-  // get history department form database
-  Future<String> getHistoryDept(regNo) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap =
-        await _firestore.collection("Students").doc(regNo).get();
-    final String dept = snap.get("Department");
-    return dept;
-  }
-
-  // get history batch form database
-  Future<String> getHistoryBatch(regNo) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap =
-        await _firestore.collection("Students").doc(regNo).get();
-    final String dept = snap.get("Batch");
-    return dept;
-  }
-
-  // get history red cards from Students collection
-  Future<List> getRedCardCount(regNo) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap =
-        await _firestore.collection("Students").doc(regNo).get();
-    final List cards = snap.get("Red Cards");
-    return cards;
-  }
-
-  // get history yellow cards from Students collection
-  Future<List> getYellowCardCount(regNo) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap =
-        await _firestore.collection("Students").doc(regNo).get();
-    List cards = snap.get("Yellow Cards");
-    return cards;
-  }
-
-  // get history blue cards from Students collection
-  Future<List> getBlueCardCount(regNo) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap =
-        await _firestore.collection("Students").doc(regNo).get();
-    final List cards = snap.get("Blue Cards");
-    return cards;
-  }
-
-  // get history red cards from Students collection
-  Future<List> getGreenCardCount(regNo) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot snap =
-        await _firestore.collection("Students").doc(regNo).get();
-    final List cards = snap.get("Green Cards");
-    return cards;
+    return [
+      snap.get("Name"),
+      snap.get("Department"),
+      snap.get("Register"),
+      snap.get("Batch"),
+      snap.get("Red Cards"),
+      snap.get("Yellow Cards"),
+      snap.get("Blue Cards"),
+      snap.get("Green Cards"),
+    ];
   }
 }
