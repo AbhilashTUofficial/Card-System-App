@@ -11,6 +11,8 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
+  String sortedBy = "regNo";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +45,105 @@ class _HistoryState extends State<History> {
                 ),
                 Center(
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          barrierColor: const Color(0x01000000),
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              margin: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).size.height - 360,
+                                  top: 120,
+                                  right: 28,
+                                  left:
+                                      MediaQuery.of(context).size.width - 160),
+                              child: Card(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    GestureDetector(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(left: 20),
+                                        child: const Text(
+                                          "Register no",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      onTap: (){
+                                        setState(() {
+                                          sortedBy="regNo";
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    GestureDetector(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(left: 20,top: 6,bottom: 6),
+                                        child: const Text(
+                                          "Name",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      onTap: (){
+                                        setState(() {
+                                          sortedBy="name";
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    GestureDetector(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(left: 20,top: 6,bottom: 6),
+                                        child: const Text(
+                                          "Department",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      onTap: (){
+                                        setState(() {
+                                          sortedBy="dept";
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    GestureDetector(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(left: 20,top: 6,bottom: 6),
+                                        child: const Text(
+                                          "Date",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      onTap: (){
+                                        setState(() {
+                                          sortedBy="date";
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    GestureDetector(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(left: 20,top: 6,bottom: 6),
+                                        child: const Text(
+                                          "Cards",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      onTap: (){
+                                        setState(() {
+                                          sortedBy="cards";
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
                     icon: const Icon(Icons.sort),
                   ),
                 )
@@ -53,6 +153,9 @@ class _HistoryState extends State<History> {
           Consumer(
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
               return ref.watch(historyCountProvider).when(data: (List history) {
+                sortedBy == "regNo"
+                    ? history = history
+                    : history = List.from(history.reversed);
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: RefreshIndicator(
@@ -101,7 +204,6 @@ Widget _historyTile(BuildContext context, history, i) {
           child: ExpansionTile(
             tilePadding: const EdgeInsets.all(10),
             // Circular Avatar and Card indicator
-            //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             leading: const SizedBox(
               width: 60,
               child: CircleAvatar(
@@ -109,14 +211,11 @@ Widget _historyTile(BuildContext context, history, i) {
                 radius: 32,
               ),
             ),
-            //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
             // History name
-            //-----------------------------------------------------------------------
             title: Text(
               name,
             ),
-            //-----------------------------------------------------------------------
 
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +283,7 @@ Widget _historyTile(BuildContext context, history, i) {
               ListTile(
                 title: GestureDetector(
                   child: const Text(
-                    "View History",
+                    "View More",
                     style: TextStyle(
                         color: Colors.blue, fontWeight: FontWeight.bold),
                   ),
@@ -192,7 +291,11 @@ Widget _historyTile(BuildContext context, history, i) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return ViewHistory(context, history[i]);
+                        return ProviderScope(
+                            child: ViewMore(
+                          context,
+                          _redCards + _yellowCards + _blueCards + _redCards,
+                        ));
                       },
                     );
                   },

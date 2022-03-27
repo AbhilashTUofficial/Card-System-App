@@ -82,4 +82,5 @@ class GeneralData {
       snap.get("Green Cards"),
     ];
   }
+
 }
