@@ -20,7 +20,7 @@ class _SubmissionState extends State<Submission> {
   bool _yellowIsChecked = false;
   bool _blueIsChecked = false;
   bool _greenIsChecked = false;
-  String dropdownValue = 'Dept of Computer Science';
+  String dropdownValue = 'Select Department';
 
 
   @override
@@ -90,6 +90,7 @@ class _SubmissionState extends State<Submission> {
                         });
                       },
                       items: <String>[
+                        'Select Department',
                         'Dept of Computer Science',
                         'Department of English',
                         'Department of Commerce',
