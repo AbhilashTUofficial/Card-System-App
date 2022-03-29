@@ -66,9 +66,10 @@ Widget _updateTile(i) {
               int cardId = data[2];
               String registerNum = data[3];
               String description = data[4];
-              String subBy = data[5];
-              String time = data[6];
-              String date = data[7];
+              String batch = data[5];
+              String subBy = data[6];
+              String time = data[7];
+              String date = data[8];
               return Card(
                 child: ExpansionTile(
                   tilePadding: const EdgeInsets.all(10),
@@ -121,10 +122,28 @@ Widget _updateTile(i) {
                   children: <Widget>[
                     // Register number
                     ListTile(
-                      title: Text(
-                        "Reg Number: " + registerNum,
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 1),
+                            child: Text(
+                              "Reg Number: " + registerNum,
+
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 1),
+
+                            child: Text(
+                              "Batch: " + batch,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+
 
                     // Entry Description
                     ListTile(

@@ -1,7 +1,7 @@
 import 'package:card_system_app/Widgets/cardsInfo.dart';
 import 'package:card_system_app/screens/history_screen.dart';
 import 'package:card_system_app/screens/submission_screen.dart';
-import 'package:card_system_app/screens/updates.dart';
+import 'package:card_system_app/screens/updates_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 2);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
   }
 
   @override

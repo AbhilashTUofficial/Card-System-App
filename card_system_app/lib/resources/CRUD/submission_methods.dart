@@ -52,6 +52,7 @@ class SubMethods {
                   'Name': name.trim(),
                   'Register Number': regNo.trim(),
                   'Department': department,
+                  'Batch':'20' + ib.toString() + ' - 20' + jb.toString(),
                   'Card id': cardId,
                   'Date': date,
                   'Time': time,

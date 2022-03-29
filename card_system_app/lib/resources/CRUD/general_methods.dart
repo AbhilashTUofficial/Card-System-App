@@ -51,6 +51,7 @@ class GeneralData {
       snap.get("Card id"),
       snap.get("Register Number"),
       snap.get("Description"),
+      snap.get("Batch"),
       snap.get("SubBy"),
       snap.get("Time"),
       snap.get("Date"),
