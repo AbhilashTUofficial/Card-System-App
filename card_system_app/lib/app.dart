@@ -1,3 +1,4 @@
+import 'package:card_system_app/resources/models/writeToFile.dart';
 import 'package:card_system_app/screens/home_screen.dart';
 import 'package:card_system_app/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,8 +10,10 @@ class CardSysApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData(primaryColor: const Color(0xFF398AE5));
     return MaterialApp(
-      title: 'Instagram Clone',
+
+      title: 'card sys app',
       debugShowCheckedModeBanner: false,
       // home:SignupScreen()
       home: StreamBuilder(
@@ -18,6 +21,7 @@ class CardSysApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
+              userCredWriteToFile();
               return  Home();
             } else if (snapshot.hasError) {
               return Center(

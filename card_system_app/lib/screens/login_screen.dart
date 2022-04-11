@@ -41,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading=false;
     });
     if (res == 'success') {
+
       showSnackBar("Success Logged In", context);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Home()));
     } else if (res == 'wrong-password') {
