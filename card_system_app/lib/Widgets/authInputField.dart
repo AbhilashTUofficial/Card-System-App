@@ -8,7 +8,7 @@ class AuthInputField extends StatelessWidget {
   final String type;
 
 
-  Icon getIcon(){
+  Icon _getIcon(){
     if(type=='password'){
       return const Icon(Icons.lock,
         color: Colors.white,);
@@ -35,7 +35,7 @@ class AuthInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      decoration: boxDecorationStyle,
+      decoration: authContDecorationStyle,
       height: 60.0,
       margin: const EdgeInsets.symmetric(vertical: 6),
       child: TextField(
@@ -48,7 +48,7 @@ class AuthInputField extends StatelessWidget {
         decoration: InputDecoration(
           border: InputBorder.none,
           contentPadding: const EdgeInsets.only(top: 14.0),
-          prefixIcon: getIcon(),
+          prefixIcon: _getIcon(),
           hintText: hintText,
           hintStyle: hintTextStyle,
         ),

@@ -12,7 +12,7 @@ const labelStyle = TextStyle(
   fontSize: 16
 );
 
-final boxDecorationStyle = BoxDecoration(
+final authContDecorationStyle = BoxDecoration(
   color: const Color(0xFF6CA8F1),
   borderRadius: BorderRadius.circular(10.0),
   boxShadow: const [
@@ -23,3 +23,4 @@ final boxDecorationStyle = BoxDecoration(
     ),
   ],
 );
+

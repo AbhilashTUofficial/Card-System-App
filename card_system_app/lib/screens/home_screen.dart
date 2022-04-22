@@ -2,10 +2,13 @@ import 'package:card_system_app/Palette/PageBackground.dart';
 import 'package:card_system_app/Palette/constants.dart';
 import 'package:card_system_app/resources/auth_methods.dart';
 import 'package:card_system_app/screens/login_screen.dart';
+import 'package:card_system_app/screens/submission.dart';
 import 'package:card_system_app/screens/updates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'info_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,7 +24,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 2);
   }
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -76,8 +79,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       controller: _tabController,
       children: [
         Updates(),
-        Updates(),
-        Updates(),
+        Submission(),
+        Info(),
 
       ],
     ),
